@@ -189,8 +189,8 @@
   EmbeddedPkg/MetronomeDxe/MetronomeDxe.inf
 
   MdeModulePkg/Universal/Console/ConPlatformDxe/ConPlatformDxe.inf
-  MdeModulePkg/Universal/Console/ConSplitterDxe/ConSplitterDxe.inf
-  MdeModulePkg/Universal/Console/GraphicsConsoleDxe/GraphicsConsoleDxe.inf
+  HtcLeoPkg/Drivers/ConSplitterDxe/ConSplitterDxe.inf
+  HtcLeoPkg/Drivers/GraphicsConsoleDxe/GraphicsConsoleDxe.inf
   MdeModulePkg/Universal/Console/TerminalDxe/TerminalDxe.inf
   MdeModulePkg/Universal/SerialDxe/SerialDxe.inf
 
