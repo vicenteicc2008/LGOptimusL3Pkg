@@ -8,7 +8,7 @@ export WORKSPACE=$PWD/workspace
 GCC5_ARM_PREFIX=arm-linux-gnueabihf- build -s -n 0 -a ARM -t GCC5 -p MSM8909Pkg/MSM8909Pkg.dsc
 
 # Build BootShim
-chmod+x build_boot_shim.sh
+chmod +x build_boot_shim.sh
 ./build_boot_shim.sh
 
 cat BootShim/BootShim.bin workspace/Build/MSM8909/DEBUG_GCC5/FV/MSM8909_UEFI.fd >>workspace/Build/payload.bin
