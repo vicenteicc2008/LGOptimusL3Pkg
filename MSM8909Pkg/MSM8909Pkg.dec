@@ -36,12 +36,12 @@
 
 [PcdsFixedAtBuild.common]
   # Simple FrameBuffer
-  gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferAddress|0x83200000|UINT32|0x0000a400
+  gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferAddress|0x2a00000|UINT32|0x0000a400
   gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferWidth|480|UINT32|0x0000a401
-  gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferHeight|854|UINT32|0x0000a402
-  gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferPixelBpp|24|UINT32|0x0000a403
+  gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferHeight|800|UINT32|0x0000a402
+  gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferPixelBpp|16|UINT32|0x0000a403
   gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferVisibleWidth|480|UINT32|0x0000a404
-  gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferVisibleHeight|853|UINT32|0x0000a405
+  gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferVisibleHeight|800|UINT32|0x0000a405
 
   # RTC information
    gMSM8909PkgTokenSpaceGuid.PcdBootShimInfo1|0xb0000000|UINT64|0x00000a601

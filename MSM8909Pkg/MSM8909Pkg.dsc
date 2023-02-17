@@ -146,9 +146,9 @@
   #
   gEfiMdeModulePkgTokenSpaceGuid.PcdEmuVariableNvModeEnable|TRUE
 
-  gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferAddress|0x83200000
+  gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferAddress|0x2a00000
   gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferWidth|480
-  gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferHeight|854
+  gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferHeight|800
 
   gEfiMdeModulePkgTokenSpaceGuid.PcdAcpiExposedTableVersions|0x20
 

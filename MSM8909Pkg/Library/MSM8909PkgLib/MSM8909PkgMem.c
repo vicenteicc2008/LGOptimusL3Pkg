@@ -42,7 +42,7 @@ STATIC struct ReservedMemory {
     { 0x88000000, 0x05500000 },    //mpss
     { 0x8d500000, 0x00700000 },    //wcnss
     { 0x8dc00000, 0x00100000 },    //mba
-    { 0x83200000, 0x00800000 },    // cont_splash_region (framebuffer)
+    { 0x02a00000, 0x000bbb00 },    // cont_splash_region (framebuffer)
 };
 
 /**
