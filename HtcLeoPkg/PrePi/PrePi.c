@@ -42,6 +42,14 @@ PrePiMain (
   // Initialize the architecture specific bits
   ArchInitialize ();
 
+  // Paint the screen to black
+  uint8_t *start = (uint8_t *)0x02A00000;
+  uint8_t *end = (uint8_t *)0x02ABBB00;  
+
+  for (uint8_t *ptr = start; ptr < end; ptr++) {
+    *ptr = 0;
+  }
+
   // Initialize the Serial Port
   SerialPortInitialize ();
   CharCount = AsciiSPrint (
