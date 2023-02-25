@@ -106,11 +106,11 @@
   gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVersionString|L"Testing"
 
   # System Memory (1GB)
-  gArmTokenSpaceGuid.PcdSystemMemoryBase|0x80000000
-  gArmTokenSpaceGuid.PcdSystemMemorySize|0x40000000
+  gArmTokenSpaceGuid.PcdSystemMemoryBase|0x11800000
+  gArmTokenSpaceGuid.PcdSystemMemorySize|0x1E800000
 
   # We boot all processors here!!!!!
-  gArmPlatformTokenSpaceGuid.PcdCoreCount|4
+  gArmPlatformTokenSpaceGuid.PcdCoreCount|1
   gArmPlatformTokenSpaceGuid.PcdClusterCount|1
 
   #
