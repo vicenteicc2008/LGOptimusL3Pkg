@@ -26,6 +26,8 @@
 #define DDR_ATTRIBUTES_CACHED           ARM_MEMORY_REGION_ATTRIBUTE_WRITE_BACK
 #define DDR_ATTRIBUTES_UNCACHED         ARM_MEMORY_REGION_ATTRIBUTE_UNCACHED_UNBUFFERED
 
+#define QSD8250_PERIPH_BASE              0x00000000
+#define QSD8250_PERIPH_SZ                0x11800000
 
 STATIC struct ReservedMemory {
     EFI_PHYSICAL_ADDRESS         Offset;
@@ -114,6 +116,11 @@ ArmPlatformGetVirtualMemoryMap (
     VirtualMemoryTable[Index].VirtualBase     = PcdGet64 (PcdSystemMemoryBase);
     VirtualMemoryTable[Index].Length          = PcdGet64 (PcdSystemMemorySize);
     VirtualMemoryTable[Index].Attributes      = CacheAttributes;
+    // QSD8250 SOC peripherals
+    VirtualMemoryTable[++Index].PhysicalBase  = QSD8250_PERIPH_BASE;
+    VirtualMemoryTable[Index].VirtualBase     = QSD8250_PERIPH_BASE;
+    VirtualMemoryTable[Index].Length          = QSD8250_PERIPH_SZ;
+    VirtualMemoryTable[Index].Attributes      = ARM_MEMORY_REGION_ATTRIBUTE_DEVICE;
     // End of Table
     VirtualMemoryTable[++Index].PhysicalBase  = 0;
     VirtualMemoryTable[Index].VirtualBase     = 0;
