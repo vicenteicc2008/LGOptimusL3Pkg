@@ -24,7 +24,7 @@ jobs:
       run: |
         cd /home/runner/work/edk2stuff
         git clone https://github.com/Tianocore/edk2.git --recursive --depth=1
-        git clone https://github.com/sonic011gamer/MSM8909Pkg.git --depth=1
+        git clone https://github.com/HTC-Leo-Revival-Project/HtcLeoPkg.git --depth=1
         git clone https://github.com/tianocore/edk2-platforms.git --depth=1
         
     - name: Build BaseTools
@@ -33,7 +33,7 @@ jobs:
         make -C BaseTools/
     - name: Build EDK2
       run: |
-        cd /home/runner/work/edk2stuff/MSM8909Pkg
+        cd /home/runner/work/edk2stuff/HtcLeoPkg
         export PACKAGES_PATH=$PWD/home/runner/work/edk2stuff/edk2:$PWD/home/runner/work/edk2stuff/edk2-platforms:$PWD
         export WORKSPACE=$PWD/workspace
         . /home/runner/work/edk2stuff/edk2/edksetup.sh
@@ -42,4 +42,4 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: uefi.img
-        path: /home/runner/work/edk2stuff/MSM8909Pkg/uefi.img
+        path: /home/runner/work/edk2stuff/HtcLeoPkg/uefi.img
