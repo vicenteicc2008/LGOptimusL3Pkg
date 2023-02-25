@@ -24,7 +24,7 @@
   EmbeddedPkg/EmbeddedPkg.dec
   MdePkg/MdePkg.dec
   MdeModulePkg/MdeModulePkg.dec
-  MSM8909Pkg/MSM8909Pkg.dec
+  HtcLeoPkg/HtcLeoPkg.dec
 
 [LibraryClasses]
   ArmLib
@@ -34,9 +34,9 @@
   SerialPortLib
 
 [Sources.common]
-  MSM8909Pkg.c
-  MSM8909PkgHelper.S
-  MSM8909PkgMem.c
+  HtcLeoPkg.c
+  HtcLeoPkgHelper.S
+  HtcLeoPkgMem.c
 
 [FixedPcd]
   gArmTokenSpaceGuid.PcdArmPrimaryCore

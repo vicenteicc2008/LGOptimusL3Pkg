@@ -12,7 +12,7 @@
 *
 **/
 
-#ifndef __MSM8909PKGDXE_H__
-#define __MSM8909PKGDXE_H__
+#ifndef __HtcLeoPkgDXE_H__
+#define __HtcLeoPkgDXE_H__
 
-#endif /* __MSM8909PKGDXE_H__ */
+#endif /* __HtcLeoPkgDXE_H__ */

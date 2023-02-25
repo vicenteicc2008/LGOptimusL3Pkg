@@ -30,7 +30,7 @@
   ArmPkg/ArmPkg.dec
   MdePkg/MdePkg.dec
   EmbeddedPkg/EmbeddedPkg.dec
-  MSM8909Pkg/MSM8909Pkg.dec
+  HtcLeoPkg/HtcLeoPkg.dec
 
 [LibraryClasses]
   IoLib
@@ -40,4 +40,4 @@
   PcdLib
 
 [FixedPcd]
-  gMSM8909PkgTokenSpaceGuid.PcdBootShimInfo1
+  gHtcLeoPkgTokenSpaceGuid.PcdBootShimInfo1

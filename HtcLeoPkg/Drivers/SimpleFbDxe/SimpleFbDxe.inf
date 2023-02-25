@@ -19,7 +19,7 @@
   MdeModulePkg/MdeModulePkg.dec
   EmbeddedPkg/EmbeddedPkg.dec
   ArmPkg/ArmPkg.dec
-  MSM8909Pkg/MSM8909Pkg.dec
+  HtcLeoPkg/HtcLeoPkg.dec
 
 [LibraryClasses]
   BaseLib
@@ -38,9 +38,9 @@
   gEfiCpuArchProtocolGuid
 
 [FixedPcd]
-  gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferAddress
-  gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferWidth
-  gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferHeight
+  gHtcLeoPkgTokenSpaceGuid.PcdMipiFrameBufferAddress
+  gHtcLeoPkgTokenSpaceGuid.PcdMipiFrameBufferWidth
+  gHtcLeoPkgTokenSpaceGuid.PcdMipiFrameBufferHeight
 
 [Guids]
   gEfiMdeModulePkgTokenSpaceGuid

@@ -26,7 +26,7 @@
 
 [Packages]
   ArmPkg/ArmPkg.dec
-  MSM8909Pkg/MSM8909Pkg.dec
+  HtcLeoPkg/HtcLeoPkg.dec
   MdePkg/MdePkg.dec
   MdeModulePkg/MdeModulePkg.dec
   EmbeddedPkg/EmbeddedPkg.dec

@@ -26,8 +26,8 @@
 #define DDR_ATTRIBUTES_CACHED           ARM_MEMORY_REGION_ATTRIBUTE_WRITE_BACK
 #define DDR_ATTRIBUTES_UNCACHED         ARM_MEMORY_REGION_ATTRIBUTE_UNCACHED_UNBUFFERED
 
-#define MSM8909_PERIPH_BASE              0x00000000
-#define MSM8909_PERIPH_SZ                0x60000000
+#define QSD8250_PERIPH_BASE              0x00000000
+#define QSD8250_PERIPH_SZ                0x60000000
 
 
 STATIC struct ReservedMemory {
@@ -128,10 +128,10 @@ ArmPlatformGetVirtualMemoryMap (
     VirtualMemoryTable[Index].VirtualBase     = PcdGet64 (PcdSystemMemoryBase);
     VirtualMemoryTable[Index].Length          = PcdGet64 (PcdSystemMemorySize);
     VirtualMemoryTable[Index].Attributes      = CacheAttributes;
-    // MSM8909 SOC peripherals
-    VirtualMemoryTable[++Index].PhysicalBase  = MSM8909_PERIPH_BASE;
-    VirtualMemoryTable[Index].VirtualBase     = MSM8909_PERIPH_BASE;
-    VirtualMemoryTable[Index].Length          = MSM8909_PERIPH_SZ;
+    // QSD8250 SOC peripherals
+    VirtualMemoryTable[++Index].PhysicalBase  = QSD8250_PERIPH_BASE;
+    VirtualMemoryTable[Index].VirtualBase     = QSD8250_PERIPH_BASE;
+    VirtualMemoryTable[Index].Length          = QSD8250_PERIPH_SZ;
     VirtualMemoryTable[Index].Attributes      = ARM_MEMORY_REGION_ATTRIBUTE_DEVICE;
     // End of Table
     VirtualMemoryTable[++Index].PhysicalBase  = 0;

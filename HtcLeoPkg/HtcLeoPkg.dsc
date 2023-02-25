@@ -16,7 +16,7 @@
 #
 ################################################################################
 [Defines]
-  PLATFORM_NAME                  = MSM8909
+  PLATFORM_NAME                  = QSD8250
   PLATFORM_GUID                  = 28f1a3bf-193a-47e3-a7b9-5a435eaab2ee
   PLATFORM_VERSION               = 0.1
   DSC_SPECIFICATION              = 0x00010019
@@ -24,9 +24,9 @@
   SUPPORTED_ARCHITECTURES        = ARM
   BUILD_TARGETS                  = DEBUG|RELEASE
   SKUID_IDENTIFIER               = DEFAULT
-  FLASH_DEFINITION               = MSM8909Pkg/MSM8909Pkg.fdf
+  FLASH_DEFINITION               = HtcLeoPkg/HtcLeoPkg.fdf
 
-!include MSM8909Pkg/CommonDsc.dsc.inc
+!include HtcLeoPkg/CommonDsc.dsc.inc
 
 [LibraryClasses]
   RegisterFilterLib|MdePkg/Library/RegisterFilterLibNull/RegisterFilterLibNull.inf
@@ -39,10 +39,10 @@
 [LibraryClasses.common]
   OrderedCollectionLib|MdePkg/Library/BaseOrderedCollectionRedBlackTreeLib/BaseOrderedCollectionRedBlackTreeLib.inf
   ArmLib|ArmPkg/Library/ArmLib/ArmBaseLib.inf
-  ArmPlatformLib|MSM8909Pkg/Library/MSM8909PkgLib/MSM8909PkgLib.inf
+  ArmPlatformLib|HtcLeoPkg/Library/HtcLeoPkgLib/HtcLeoPkgLib.inf
   CompilerIntrinsicsLib|ArmPkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf
   CapsuleLib|MdeModulePkg/Library/DxeCapsuleLibNull/DxeCapsuleLibNull.inf
-  PlatformBootManagerLib|MSM8909Pkg/Library/PlatformBootManagerLib/PlatformBootManagerLib.inf
+  PlatformBootManagerLib|HtcLeoPkg/Library/PlatformBootManagerLib/PlatformBootManagerLib.inf
   UefiBootManagerLib|MdeModulePkg/Library/UefiBootManagerLib/UefiBootManagerLib.inf
   CustomizedDisplayLib|MdeModulePkg/Library/CustomizedDisplayLib/CustomizedDisplayLib.inf
 
@@ -52,7 +52,7 @@
   DxeServicesLib|MdePkg/Library/DxeServicesLib/DxeServicesLib.inf
   BootLogoLib|MdeModulePkg/Library/BootLogoLib/BootLogoLib.inf
 
-  SerialPortLib|MSM8909Pkg/Library/InMemorySerialPortLib/InMemorySerialPortLib.inf
+  SerialPortLib|HtcLeoPkg/Library/InMemorySerialPortLib/InMemorySerialPortLib.inf
   RealTimeClockLib|EmbeddedPkg/Library/VirtualRealTimeClockLib/VirtualRealTimeClockLib.inf
   TimeBaseLib|EmbeddedPkg/Library/TimeBaseLib/TimeBaseLib.inf
 
@@ -74,8 +74,8 @@
 
   # Framebuffer
   FrameBufferBltLib|MdeModulePkg/Library/FrameBufferBltLib/FrameBufferBltLib.inf
-  SerialPortLib|MSM8909Pkg/Library/FrameBufferSerialPortLib/FrameBufferSerialPortLib.inf
-  MemoryInitPeiLib|MSM8909Pkg/Library/MemoryInitPeiLib/PeiMemoryAllocationLib.inf
+  SerialPortLib|HtcLeoPkg/Library/FrameBufferSerialPortLib/FrameBufferSerialPortLib.inf
+  MemoryInitPeiLib|HtcLeoPkg/Library/MemoryInitPeiLib/PeiMemoryAllocationLib.inf
   CompilerIntrinsicsLib|ArmPkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf
 
 [LibraryClasses.common.SEC]
@@ -84,7 +84,7 @@
   HobLib|EmbeddedPkg/Library/PrePiHobLib/PrePiHobLib.inf
   MemoryAllocationLib|EmbeddedPkg/Library/PrePiMemoryAllocationLib/PrePiMemoryAllocationLib.inf
   MemoryInitPeiLib|ArmPlatformPkg/MemoryInitPei/MemoryInitPeiLib.inf
-  PlatformPeiLib|MSM8909Pkg/Library/PlatformPeiLib/PlatformPeiLib.inf
+  PlatformPeiLib|HtcLeoPkg/Library/PlatformPeiLib/PlatformPeiLib.inf
   PrePiHobListPointerLib|ArmPlatformPkg/Library/PrePiHobListPointerLib/PrePiHobListPointerLib.inf
 
 ################################################################################
@@ -146,9 +146,9 @@
   #
   gEfiMdeModulePkgTokenSpaceGuid.PcdEmuVariableNvModeEnable|TRUE
 
-  gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferAddress|0x2a00000
-  gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferWidth|480
-  gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferHeight|800
+  gHtcLeoPkgTokenSpaceGuid.PcdMipiFrameBufferAddress|0x2a00000
+  gHtcLeoPkgTokenSpaceGuid.PcdMipiFrameBufferWidth|480
+  gHtcLeoPkgTokenSpaceGuid.PcdMipiFrameBufferHeight|800
 
   gEfiMdeModulePkgTokenSpaceGuid.PcdAcpiExposedTableVersions|0x20
 
@@ -201,7 +201,7 @@
 
   EmbeddedPkg/RealTimeClockRuntimeDxe/RealTimeClockRuntimeDxe.inf {
     <LibraryClasses>
-	  RealTimeClockLib|MSM8909Pkg/Library/VirtualRealTimeClockLib/VirtualRealTimeClockLib.inf
+	  RealTimeClockLib|HtcLeoPkg/Library/VirtualRealTimeClockLib/VirtualRealTimeClockLib.inf
   }
 
   MdeModulePkg/Universal/ReportStatusCodeRouter/RuntimeDxe/ReportStatusCodeRouterRuntimeDxe.inf
@@ -217,11 +217,11 @@
   EmbeddedPkg/Drivers/VirtualKeyboardDxe/VirtualKeyboardDxe.inf
   
   #
-  # MSM8909 necessary driver execution environment
+  # QSD8250 necessary driver execution environment
   #
-  MSM8909Pkg/Drivers/MSM8909PkgDxe/MSM8909PkgDxe.inf
-  MSM8909Pkg/Drivers/SimpleFbDxe/SimpleFbDxe.inf
-  MSM8909Pkg/Drivers/LogoDxe/LogoDxe.inf
+  HtcLeoPkg/Drivers/HtcLeoPkgDxe/HtcLeoPkgDxe.inf
+  HtcLeoPkg/Drivers/SimpleFbDxe/SimpleFbDxe.inf
+  HtcLeoPkg/Drivers/LogoDxe/LogoDxe.inf
 
   #
   # USB Host Support
@@ -258,12 +258,12 @@
   MdeModulePkg/Universal/Acpi/AcpiTableDxe/AcpiTableDxe.inf
   MdeModulePkg/Universal/Acpi/AcpiPlatformDxe/AcpiPlatformDxe.inf
   MdeModulePkg/Universal/Acpi/BootGraphicsResourceTableDxe/BootGraphicsResourceTableDxe.inf
-#  MSM8909Pkg/AcpiTables/AcpiTables.inf
+#  HtcLeoPkg/AcpiTables/AcpiTables.inf
 
   #
   # SMBIOS Support
   #
-  MSM8909Pkg/Drivers/SmbiosPlatformDxe/SmbiosPlatformDxe.inf
+  HtcLeoPkg/Drivers/SmbiosPlatformDxe/SmbiosPlatformDxe.inf
   MdeModulePkg/Universal/SmbiosDxe/SmbiosDxe.inf
 
   #
