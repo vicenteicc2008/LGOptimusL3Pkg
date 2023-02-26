@@ -196,8 +196,8 @@
 
   MdeModulePkg/Universal/Variable/RuntimeDxe/VariableRuntimeDxe.inf
 
-  ArmPkg/Drivers/ArmGic/ArmGicDxe.inf
-  ArmPkg/Drivers/TimerDxe/TimerDxe.inf
+  # ArmPkg/Drivers/ArmGic/ArmGicDxe.inf
+  # ArmPkg/Drivers/TimerDxe/TimerDxe.inf
 
   MdeModulePkg/Universal/WatchdogTimerDxe/WatchdogTimer.inf
 
