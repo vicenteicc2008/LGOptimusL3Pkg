@@ -7,11 +7,5 @@ export WORKSPACE=$PWD/workspace
 # not actually GCC5; it's GCC7 on Ubuntu 18.04.
 GCC5_ARM_PREFIX=arm-linux-gnueabihf- build -s -n 0 -a ARM -t GCC5 -p HtcLeoPkg/HtcLeoPkg.dsc
 
-# Build BootShim
-chmod +x build_boot_shim.sh
-./build_boot_shim.sh
-
-cat BootShim/BootShim.bin workspace/Build/QSD8250/DEBUG_GCC5/FV/QSD8250_UEFI.fd >>workspace/Build/payload.bin
-
-mkbootimg --kernel workspace/Build/payload.bin --base 0x11800000 --kernel_offset 0x00008000 -o uefi.img
+mkbootimg --kernel workspace/Build/QSD8250/DEBUG_GCC5/FV/QSD8250_UEFI.fd --base 0x11800000 --kernel_offset 0x00008000 -o uefi.img
 rm -r workspace/Build
