@@ -87,9 +87,9 @@ ArmPlatformGetVirtualMemoryMap (
   VirtualMemoryTable[Index].Attributes     = CacheAttributes;
 
   // Free memory
-  VirtualMemoryTable[++Index].PhysicalBase = 0x28000000;
-  VirtualMemoryTable[Index].VirtualBase    = 0x28000000;
-  VirtualMemoryTable[Index].Length         = 0x08000000;
+  VirtualMemoryTable[++Index].PhysicalBase = 0x11A08000;
+  VirtualMemoryTable[Index].VirtualBase    = 0x11A08000;
+  VirtualMemoryTable[Index].Length         = 0x1E5F8000;
   VirtualMemoryTable[Index].Attributes     = CacheAttributes;
 
   // End of Table
