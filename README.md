@@ -1,9 +1,14 @@
-# EDK2 UEFI Firmware For QSD8250
-Attempt to create a normal EDK2 for QSD8250.
+# EDK2 UEFI Firmware For HTC HD2
+Attempt to create a normal EDK2 for HTC HD2.
 
 ## Status 
-Untested
+Boots to EFI Shell
 
 ## To-Do
-Get to load Windows /s
+Get to load ReactOS /s
+
+## Credits
+ - sonic011gamer for creating msm8909Pkg
+ - imbushuo for creating PrimeG2Pkg and also for the framebuffer patch
+ - winocm for the iPhone4Pkg
 
