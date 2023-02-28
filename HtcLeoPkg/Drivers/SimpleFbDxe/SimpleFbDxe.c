@@ -21,7 +21,7 @@
 #define VNBYTES(bpix)	(1 << (bpix)) / 8
 #define VNBITS(bpix)	(1 << (bpix))
 
-#define FB_BITS_PER_PIXEL                   (32)
+#define FB_BITS_PER_PIXEL                   (16)
 #define FB_BYTES_PER_PIXEL                  (FB_BITS_PER_PIXEL / 8)
 
 /*
@@ -262,7 +262,7 @@ SimpleFbDxeInitialize
     mDisplay.Mode->Info->VerticalResolution = MipiFrameBufferHeight;
 
     /* SimpleFB runs on a8r8g8b8 (VIDEO_BPP32) for DB410c */
-    UINT32 LineLength = MipiFrameBufferWidth * VNBYTES(VIDEO_BPP32);
+    UINT32 LineLength = MipiFrameBufferWidth * VNBYTES(VIDEO_BPP16);
     UINT32 FrameBufferSize = LineLength * MipiFrameBufferHeight;
     EFI_PHYSICAL_ADDRESS FrameBufferAddress = MipiFrameBufferAddr;
 
