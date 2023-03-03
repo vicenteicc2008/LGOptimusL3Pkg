@@ -151,8 +151,8 @@
   gEfiMdeModulePkgTokenSpaceGuid.PcdEmuVariableNvModeEnable|TRUE
 
   gHtcLeoPkgTokenSpaceGuid.PcdMipiFrameBufferAddress|0x2a00000
-  gHtcLeoPkgTokenSpaceGuid.PcdMipiFrameBufferWidth|480
-  gHtcLeoPkgTokenSpaceGuid.PcdMipiFrameBufferHeight|800
+  gHtcLeoPkgTokenSpaceGuid.PcdMipiFrameBufferWidth|240
+  gHtcLeoPkgTokenSpaceGuid.PcdMipiFrameBufferHeight|320
 
   gEfiMdeModulePkgTokenSpaceGuid.PcdAcpiExposedTableVersions|0x20
 
