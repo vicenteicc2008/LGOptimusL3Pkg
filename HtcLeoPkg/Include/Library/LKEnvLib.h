@@ -155,8 +155,9 @@ typedef unsigned long u_long;
 #define dmb() ArmDataMemoryBarrier()
 #define dsb() ArmDataSynchronizationBarrier()
 
-#define mdelay(msecs) MicroSecondDelay ((msecs) * 1000)
-#define udelay(usecs) MicroSecondDelay ((usecs))
+extern void mdelay(unsigned msecs); //MicroSecondDelay ((msecs) * 1000)
+extern void udelay(unsigned usecs);
+//#define udelay(usecs) MicroSecondDelay ((usecs))
 //extern void udelay(unsigned usecs);
 
 #define arch_clean_invalidate_cache_range(start, len) WriteBackInvalidateDataCacheRange ((VOID *)(UINTN)(start), (UINTN)(len))

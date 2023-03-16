@@ -63,7 +63,7 @@
 #include <Library/adm.h>
 
 extern void mdelay(unsigned msecs);
-extern void dmb(void);
+extern void dmb();
 
 int adm_start_transfer(UINT32 adm_chn, UINT32 *cmd_ptr_list)
 {

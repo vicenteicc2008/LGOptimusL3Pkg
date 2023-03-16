@@ -52,7 +52,7 @@
 
 //#define 	dmb()   __asm__ __volatile__("DMB")
 
-extern void dmb(void);
+extern void dmb();
 
 /* Set rate and enable the clock */
 void clock_config(UINT32 ns, UINT32 md, UINT32 ns_addr, UINT32 md_addr)

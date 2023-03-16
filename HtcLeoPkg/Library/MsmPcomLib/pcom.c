@@ -38,7 +38,7 @@
 #include <Chipset/clock.h>
 
 void udelay(unsigned usecs);
-extern void dsb(void);
+extern void dsb();
 
 /* This function always returns 0, unless future versions check for
  * modem crash.
