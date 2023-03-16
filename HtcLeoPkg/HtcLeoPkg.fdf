@@ -119,7 +119,8 @@ APRIORI DXE {
 
   INF MdeModulePkg/Universal/WatchdogTimerDxe/WatchdogTimer.inf
 
-
+  # SoC Drivers
+  INF HtcLeoPkg/Drivers/ClockDxe/ClockDxe.inf
 
   #
   # Virtual Keyboard

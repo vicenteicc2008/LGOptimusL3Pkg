@@ -221,9 +221,8 @@
   MdeModulePkg/Universal/ReportStatusCodeRouter/RuntimeDxe/ReportStatusCodeRouterRuntimeDxe.inf
   MdeModulePkg/Universal/StatusCodeHandler/RuntimeDxe/StatusCodeHandlerRuntimeDxe.inf
 
-  #
-  # GPIO
-  #
+  # SoC Drivers
+  HtcLeoPkg/Drivers/ClockDxe/ClockDxe.inf
 
   #
   # Virtual Keyboard
