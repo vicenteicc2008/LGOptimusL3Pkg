@@ -24,7 +24,7 @@
 #include <Library/BaseMemoryLib.h>
 
 #include <Library/LKEnvLib.h>
-#include <Library/ClockLib.h>
+//#include <Library/ClockLib.h>
 #include <Library/reg.h>
 #include <Library/adm.h>
 

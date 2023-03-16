@@ -31,10 +31,10 @@
  */
 #include <Library/IoLib.h>
 #include <Library/ArmLib.h>
+#include <Library/LKEnvLib.h>
 
 #include <Chipset/clock.h>
 #include <Library/pcom.h>
-#include <Library/qcom_lk.h>
 
 /*
  * Copyright (c) 2007-2010, Code Aurora Forum. All rights reserved.

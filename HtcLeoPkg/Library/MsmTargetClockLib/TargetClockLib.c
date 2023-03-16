@@ -1,4 +1,4 @@
-#include <Library/TargetClockLib.h>
+#include <Uefi.h>
 #include <Chipset/clock.h>
 
 RETURN_STATUS

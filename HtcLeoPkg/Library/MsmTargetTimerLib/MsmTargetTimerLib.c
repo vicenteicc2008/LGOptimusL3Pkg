@@ -20,7 +20,7 @@
 #include <Library/PcdLib.h>
 #include <Library/IoLib.h>
 
-#include <Library/qcom_lk.h>
+#include <Library/LKEnvLib.h>
 
 #include <Chipset/iomap.h>
 #include <Chipset/irqs.h>
