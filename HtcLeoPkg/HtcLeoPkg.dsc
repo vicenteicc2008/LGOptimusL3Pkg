@@ -86,6 +86,7 @@
 
   # SoC Drivers libraries
   MsmTargetClockLib|HtcLeoPkg/Library/MsmTargetClockLib/MsmTargetClockLib.inf
+  MsmTargetGpioLib|HtcLeoPkg/Library/MsmTargetGpioLib/MsmTargetGpioLib.inf
 
 [LibraryClasses.common.SEC]
   PrePiLib|EmbeddedPkg/Library/PrePiLib/PrePiLib.inf
