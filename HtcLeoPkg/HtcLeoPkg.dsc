@@ -40,7 +40,7 @@
   OrderedCollectionLib|MdePkg/Library/BaseOrderedCollectionRedBlackTreeLib/BaseOrderedCollectionRedBlackTreeLib.inf
   ArmLib|ArmPkg/Library/ArmLib/ArmBaseLib.inf
   ArmPlatformLib|HtcLeoPkg/Library/HtcLeoPkgLib/HtcLeoPkgLib.inf
-  TimerLib|HtcLeoPkg/Library/TimerLib/TimerLib.inf
+  TimerLib|HtcLeoPkg/Library/MsmTargetTimerLib/MsmTargetTimerLib.inf
   CompilerIntrinsicsLib|ArmPkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf
   CapsuleLib|MdeModulePkg/Library/DxeCapsuleLibNull/DxeCapsuleLibNull.inf
   PlatformBootManagerLib|HtcLeoPkg/Library/PlatformBootManagerLib/PlatformBootManagerLib.inf
@@ -78,6 +78,15 @@
   SerialPortLib|HtcLeoPkg/Library/FrameBufferSerialPortLib/FrameBufferSerialPortLib.inf
   MemoryInitPeiLib|HtcLeoPkg/Library/MemoryInitPeiLib/PeiMemoryAllocationLib.inf
   CompilerIntrinsicsLib|ArmPkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf
+
+  # Little kernel libraries
+  AdmLib|HtcLeoPkg/Library/AdmLib/AdmLib.inf
+  MsmPcomLib|HtcLeoPkg/Library/MsmPcomLib/MsmPcomLib.inf
+  MsmPcomClientLib|HtcLeoPkg/Library/MsmPcomClientLib/MsmPcomClientLib.inf
+
+  # SoC Drivers libraries
+  MsmTargetClockLib|HtcLeoPkg/Library/MsmTargetClockLib/MsmTargetClockLib.inf
+  MsmTargetGpioLib|HtcLeoPkg/Library/MsmTargetGpioLib/MsmTargetGpioLib.inf
 
 [LibraryClasses.common.SEC]
   PrePiLib|EmbeddedPkg/Library/PrePiLib/PrePiLib.inf
@@ -197,9 +206,8 @@
 
   MdeModulePkg/Universal/Variable/RuntimeDxe/VariableRuntimeDxe.inf
 
-  # ArmPkg/Drivers/ArmGic/ArmGicDxe.inf
-  # ArmPkg/Drivers/TimerDxe/TimerDxe.inf
   HtcLeoPkg/Drivers/InterruptDxe/InterruptDxe.inf
+  HtcLeoPkg/Drivers/TimerDxe/TimerDxe.inf
 
   MdeModulePkg/Universal/WatchdogTimerDxe/WatchdogTimer.inf
 
@@ -213,9 +221,9 @@
   MdeModulePkg/Universal/ReportStatusCodeRouter/RuntimeDxe/ReportStatusCodeRouterRuntimeDxe.inf
   MdeModulePkg/Universal/StatusCodeHandler/RuntimeDxe/StatusCodeHandlerRuntimeDxe.inf
 
-  #
-  # GPIO
-  #
+  # SoC Drivers
+  HtcLeoPkg/Drivers/ClockDxe/ClockDxe.inf
+  HtcLeoPkg/Drivers/GpioDxe/GpioDxe.inf
 
   #
   # Virtual Keyboard
