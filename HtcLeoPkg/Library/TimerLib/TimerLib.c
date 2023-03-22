@@ -87,7 +87,7 @@ MicroSecondDelay (
   IN  UINTN MicroSeconds
   )
 {
-  // Todo
+  mdelay(MicroSeconds/1000);
   return MicroSeconds;
 }
 
@@ -97,7 +97,7 @@ NanoSecondDelay (
   IN  UINTN NanoSeconds
   )
 {
-  // Todo
+  mdelay(NanoSeconds/1000);
   return NanoSeconds;
 }
 
