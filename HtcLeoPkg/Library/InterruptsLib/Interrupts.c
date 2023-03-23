@@ -80,20 +80,6 @@ STATIC HANDLER_ENTRY* GetInterruptHandlerEntry (UINTN Vector)
   return NULL;
 }
 
-enum handler_return platform_irq(struct arm_iframe *frame)
-{
-  unsigned num;
-	enum handler_return ret;
-	num = readl(VIC_IRQ_VEC_RD);
-	num = readl(VIC_IRQ_VEC_PEND_RD);
-	if (num > NR_IRQS)
-		return 0;
-	writel(1 << (num & 31), (num > 31) ? VIC_INT_CLEAR1 : VIC_INT_CLEAR0);
-	ret = handler[num].func(handler[num].arg);
-	writel(0, VIC_IRQ_VEC_WR);
-	return ret;
-}
-
 /* Calls into the handler */
 VOID
 EFIAPI
@@ -103,6 +89,14 @@ InterruptsLibIrqHandler (
   )
 {
   EFI_TPL     OriginalTPL;
+
+  unsigned num;
+
+	Source = readl(VIC_IRQ_VEC_RD);
+	Source = readl(VIC_IRQ_VEC_PEND_RD);
+  num = readl(VIC_IRQ_VEC_RD);
+	num = readl(VIC_IRQ_VEC_PEND_RD);
+	writel(1 << (Source & 31), (Source > 31) ? VIC_INT_CLEAR1 : VIC_INT_CLEAR0);
 
   // get handler entry
   HANDLER_ENTRY* Entry = GetInterruptHandlerEntry ((UINTN)Source);
@@ -115,8 +109,7 @@ InterruptsLibIrqHandler (
 
   gBS->RestoreTPL (OriginalTPL);
 
-  // signal eoi
-  mInterrupt->EndOfInterrupt (mInterrupt, Source);
+  writel(0, VIC_IRQ_VEC_WR);
 }
 
 /* disables the interrupt */
