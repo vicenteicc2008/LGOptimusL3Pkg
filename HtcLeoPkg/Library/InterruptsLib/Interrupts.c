@@ -47,8 +47,6 @@ struct ihandler {
 	void *arg;
 };
 
-static struct ihandler handler[NR_IRQS];
-
 typedef struct {
   UINTN                 Vector;
   int_handler           Handler;
