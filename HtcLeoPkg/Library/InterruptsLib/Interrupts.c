@@ -29,10 +29,10 @@
  * SUCH DAMAGE.
  */
 
-#include <Library/LKEnvLib.h>
 #include <PiDxe.h>
 #include <Library/DebugLib.h>
 #include <Library/BaseLib.h>
+#include <Library/IoLib.h>
 #include <Library/InterruptsLib.h>
 #include <Library/MemoryAllocationLib.h>
 #include <Library/UefiBootServicesTableLib.h>
@@ -41,11 +41,6 @@
 #include <Chipset/irqs.h>
 #include <Chipset/iomap.h>
 #include <Chipset/interrupts.h>
-
-struct ihandler {
-	int_handler func;
-	void *arg;
-};
 
 typedef struct {
   UINTN                 Vector;
@@ -88,13 +83,9 @@ InterruptsLibIrqHandler (
 {
   EFI_TPL     OriginalTPL;
 
-  unsigned num;
-
-	Source = readl(VIC_IRQ_VEC_RD);
-	Source = readl(VIC_IRQ_VEC_PEND_RD);
-  num = readl(VIC_IRQ_VEC_RD);
-	num = readl(VIC_IRQ_VEC_PEND_RD);
-	writel(1 << (Source & 31), (Source > 31) ? VIC_INT_CLEAR1 : VIC_INT_CLEAR0);
+  Source = MmioRead32(VIC_IRQ_VEC_RD);
+  Source = MmioRead32(VIC_IRQ_VEC_PEND_RD);
+  MmioWrite32((Source > 31) ? VIC_INT_CLEAR1 : VIC_INT_CLEAR0, 1 << (Source & 31));
 
   // get handler entry
   HANDLER_ENTRY* Entry = GetInterruptHandlerEntry ((UINTN)Source);
@@ -107,7 +98,7 @@ InterruptsLibIrqHandler (
 
   gBS->RestoreTPL (OriginalTPL);
 
-  writel(0, VIC_IRQ_VEC_WR);
+  MmioWrite32(VIC_IRQ_VEC_WR, 0);
 }
 
 /* disables the interrupt */
