@@ -85,8 +85,10 @@
   MsmPcomClientLib|HtcLeoPkg/Library/MsmPcomClientLib/MsmPcomClientLib.inf
 
   # SoC Drivers libraries
+  HtcLeoPlatformResetLib|HtcLeoPkg/Library/HtcLeoPlatformResetLib/HtcLeoPlatformResetLib.inf
   MsmTargetClockLib|HtcLeoPkg/Library/MsmTargetClockLib/MsmTargetClockLib.inf
   MsmTargetGpioLib|HtcLeoPkg/Library/MsmTargetGpioLib/MsmTargetGpioLib.inf
+  SdccLib|HtcLeoPkg/Library/SdccLib/SdccLib.inf
   HtcLeoVibrationLib|HtcLeoPkg/Library/HtcLeoVibrationLib/HtcLeoVibrationLib.inf
 
 [LibraryClasses.common.SEC]
@@ -225,6 +227,7 @@
   # SoC Drivers
   HtcLeoPkg/Drivers/ClockDxe/ClockDxe.inf
   HtcLeoPkg/Drivers/GpioDxe/GpioDxe.inf
+  HtcLeoPkg/Drivers/SdccDxe/SdccDxe.inf
 
   #
   # Virtual Keyboard
