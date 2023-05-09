@@ -101,7 +101,7 @@ STATIC UINT32 MmcReadInternal
 {
     UINT32 Ret = 0;
     UINT32 BlockSize = gMMCHSMedia.BlockSize;//Instance->BlockMedia.BlockSize;
-    UINT32 OpBlkSize = 64;
+    //UINT32 OpBlkSize = 64;
     UINT32 ReadSize;
     UINT8 *Sptr = (UINT8 *) Buf;
 
@@ -113,7 +113,7 @@ STATIC UINT32 MmcReadInternal
 
 
     // Set size 
-    ReadSize = BlockSize * OpBlkSize;//512*64
+    ReadSize = BlockSize;// * OpBlkSize;//512*64
 
 	DEBUG((EFI_D_ERROR, "ReadSize / BlockSize=%d\n", (ReadSize/BlockSize)));
 
@@ -369,7 +369,6 @@ MMCHSInitialize(
 			NULL
 			);
 
-        //mdelay(5000);
 		return Status;
 	}
 	else {
