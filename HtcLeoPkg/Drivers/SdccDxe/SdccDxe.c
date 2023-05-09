@@ -361,6 +361,43 @@ MMCHSInitialize(
             CpuDeadLoop();
         }
 
+        VOID * data;
+
+		Status = gBS->AllocatePool(EfiBootServicesData, 1024, &data);
+
+		if (EFI_ERROR(Status)) {
+			DEBUG((EFI_D_INFO, "test memory alloc failed!\n"));
+			return Status;
+		}
+
+		int ret = 0;
+
+        DEBUG((EFI_D_ERROR, "Call MMCHSReadBlocks!\n"));
+		ret = MMCHSReadBlocks(NULL, 0, 0, 1024, data);
+
+		if (ret != MMC_BOOT_E_SUCCESS)
+		{
+			DEBUG((EFI_D_INFO, "mmc_read failed! ret = %d\n", ret));
+			return EFI_DEVICE_ERROR;
+		}
+
+		UINT8 * STR = (UINT8 *)data;
+
+        DEBUG((EFI_D_ERROR, "First 512 Bytes = \n"));
+        for (int j = 0; j < 512; j++) {
+            DEBUG((EFI_D_ERROR, "%p ", STR[j]));
+            if ((j % 8) == 0) {
+                DEBUG((EFI_D_ERROR, "  "));
+            }
+            if ((j % 16) == 0) {
+                DEBUG((EFI_D_ERROR, "\n"));
+            }
+        }
+
+        mdelay(5000);
+
+        Status = gBS->FreePool(data);
+
 		//Publish BlockIO.
 		Status = gBS->InstallMultipleProtocolInterfaces(
 			&ImageHandle,
