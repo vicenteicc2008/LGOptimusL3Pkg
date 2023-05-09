@@ -103,7 +103,6 @@ ulong mmc_bread(UINT32 start, UINT32 blkcnt, void *dst)
 {
 	int err;
 	UINT32 cur, blocks_todo = blkcnt;
-	uint32_t buffer[128];
 
 	/*
 	 * Might be needed to set blocklen here
@@ -118,7 +117,7 @@ ulong mmc_bread(UINT32 start, UINT32 blkcnt, void *dst)
 		}
 		blocks_todo -= cur;
 		start += cur;
-		dst += cur * SDCC_FIFO_SIZE;//mmc->read_bl_len;
+		dst += cur * 512;
 	} 
 	while (blocks_todo > 0);
 

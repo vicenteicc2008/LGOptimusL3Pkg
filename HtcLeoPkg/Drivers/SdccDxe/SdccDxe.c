@@ -101,7 +101,6 @@ STATIC UINT32 MmcReadInternal
 {
     UINT32 Ret = 0;
     UINT32 BlockSize = gMMCHSMedia.BlockSize;//Instance->BlockMedia.BlockSize;
-    /* Operation block size. Will decrement until reaches 1 */
     UINT32 OpBlkSize = 64;
     UINT32 ReadSize;
     UINT8 *Sptr = (UINT8 *) Buf;
@@ -109,44 +108,22 @@ STATIC UINT32 MmcReadInternal
     ASSERT(!(DataAddr % BlockSize));
     ASSERT(!(DataLen % BlockSize));
 
-    /*
-    * DMA onto write back memory is unsafe/nonportable,
-    * but callers to this routine normally provide
-    * write back buffers. Invalidate cache
-    * before read data from MMC.
-    */
     WriteBackInvalidateDataCacheRange(Buf, DataLen);
 
-    /* TODO: This function is aware of max data that can be
-    * tranferred using sdhci adma mode, need to have a cleaner
-    * implementation to keep this function independent of sdhci
-    * limitations
-    */
 
-    /* Set size */
+
+    // Set size 
     ReadSize = BlockSize * OpBlkSize;//512*64
 
 	DEBUG((EFI_D_ERROR, "ReadSize / BlockSize=%d\n", (ReadSize/BlockSize)));
 
-read:
     while (DataLen > ReadSize) 
     {
         Ret = mmc_bread((DataAddr / BlockSize), (ReadSize / BlockSize), (VOID *) Sptr);
         if (Ret == 0)
         {
-            // Attempt to reduce the block size
-            if (OpBlkSize > 1)
-            {
-                // Decrement op size
-                OpBlkSize = OpBlkSize / 2;
-                ReadSize = BlockSize * OpBlkSize;
-                goto read;
-            }
-            else
-            {
-                DEBUG((EFI_D_ERROR, "Failed Reading block @ %x\n",(UINTN) (DataAddr / BlockSize)));
-                goto fail;
-            }
+            DEBUG((EFI_D_ERROR, "Failed Reading block @ %x\n",(UINTN) (DataAddr / BlockSize)));
+            return 0;
         }
         Sptr += ReadSize;
         DataAddr += ReadSize;
@@ -158,28 +135,12 @@ read:
         Ret = mmc_bread((DataAddr / BlockSize), (DataLen / BlockSize), (VOID *) Sptr);
         if (Ret == 0)
         {
-            // Attempt to reduce the block size
-			DEBUG((EFI_D_ERROR, "Attempt to reduce the block size\n"));
-            if (OpBlkSize > 1)
-            {
-                // Decrement op size
-                OpBlkSize = OpBlkSize / 2;
-                ReadSize = BlockSize * OpBlkSize;
-                goto read;
-            }
-            else
-            {
-                DEBUG((EFI_D_ERROR, "Failed Reading block @ %x\n",(UINTN) (DataAddr / BlockSize)));
-                goto fail;
-            }
+            DEBUG((EFI_D_ERROR, "Failed Reading block @ %x\n",(UINTN) (DataAddr / BlockSize)));
+            return 1;
         }
     }
 
     return 1;
-fail:
-	DEBUG((EFI_D_ERROR, "MmcReadInternal: Fail!!\n"));
-	mdelay(5000);
-    return 0;
 }
 
 
@@ -217,7 +178,7 @@ MMCHSReadBlocks(
 )
 {
 	EFI_STATUS Status = EFI_SUCCESS;
-	EFI_TPL    OldTpl;
+	//EFI_TPL    OldTpl;
 	UINTN      BlockSize;
 	UINTN      ret;
 
@@ -250,9 +211,10 @@ MMCHSReadBlocks(
         return EFI_SUCCESS;
     }
 
-	OldTpl = gBS->RaiseTPL(TPL_NOTIFY);
+	//OldTpl = gBS->RaiseTPL(TPL_NOTIFY);
 
 	ret = MmcReadInternal((UINT64) Lba * 512, Buffer, BufferSize); //Instance deleted for now
+    //ret = mmc_bread((Lba), (BufferSize / BlockSize), Buffer);
 	
 	if (ret == 1)
         return EFI_SUCCESS;
@@ -261,7 +223,7 @@ MMCHSReadBlocks(
         mdelay(5000);
         return EFI_DEVICE_ERROR;
 
-	gBS->RestoreTPL(OldTpl);
+	//gBS->RestoreTPL(OldTpl);
 	
 	return Status;
 }
@@ -406,6 +368,8 @@ MMCHSInitialize(
 			&gEfiDevicePathProtocolGuid, &gMmcHsDevicePath,
 			NULL
 			);
+
+        //mdelay(5000);
 		return Status;
 	}
 	else {
