@@ -23,6 +23,7 @@
 [BuildOptions.ARM]
   GCC:*_*_*_CC_FLAGS = -Wno-unused-function -Wno-uninitialized -Wno-unused-variable -Wno-shift-count-overflow -Wno-implicit-function-declaration -Wno-missing-braces
 [Sources.common]
+  sdcc.c
   SdccDxe.c
 
 [Packages]
@@ -41,14 +42,15 @@
   BaseMemoryLib
   IoLib
   ArmLib
+  AdmLib
   BaseLib
   DebugLib
   UefiBootServicesTableLib
 
   MsmTargetClockLib
   MsmTargetGpioLib
-  SdccLib
-  
+  MsmPcomLib
+  MsmPcomClientLib
   TimerLib
 
 [Guids]

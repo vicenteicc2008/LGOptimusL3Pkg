@@ -99,6 +99,7 @@ ulong mmc_bwrite(int dev_num, ulong blknr, unsigned long blkcnt, const void *src
 	return 0;
 }
 
+/* IN USE */
 ulong mmc_bread(UINT32 start, UINT32 blkcnt, void *dst)
 {
 	int err;
@@ -124,6 +125,7 @@ ulong mmc_bread(UINT32 start, UINT32 blkcnt, void *dst)
 	return blkcnt;
 }
 
+/* IN USE */
 int mmc_legacy_init()
 {
     int rc = -ENODEV;
@@ -246,60 +248,19 @@ int mmc_legacy_init()
  */
 static void mmc_decode_cid(uint32_t * resp)
 {
-	if (IF_TYPE_SD == mmc_dev.if_type) {
-		/*
-		 * SD doesn't currently have a version field so we will
-		 * have to assume we can parse this.
-		 */
-		DEBUG((EFI_D_ERROR, "Man %02x OEM %c%c \"%c%c%c%c%c\" Date %02u/%04u\n",
-				UNSTUFF_BITS(resp, 120, 8), UNSTUFF_BITS(resp, 112, 8),
-				UNSTUFF_BITS(resp, 104, 8), UNSTUFF_BITS(resp, 96, 8),
-				UNSTUFF_BITS(resp, 88, 8), UNSTUFF_BITS(resp, 80, 8),
-				UNSTUFF_BITS(resp, 72, 8), UNSTUFF_BITS(resp, 64, 8),
-				UNSTUFF_BITS(resp, 8, 4), UNSTUFF_BITS(resp, 12, 8) + 2000));
-        DEBUG((EFI_D_ERROR, "%d.%d\n", UNSTUFF_BITS(resp, 60, 4), UNSTUFF_BITS(resp, 56, 4) ));
-		DEBUG((EFI_D_ERROR, "%u\n", UNSTUFF_BITS(resp, 24, 32) ));//(char *)mmc_dev.product
-	} else {
-		/*
-		 * The selection of the format here is based upon published
-		 * specs from sandisk and from what people have reported.
-		 */
-		switch (spec_ver) {
-			case 0:	/* MMC v1.0 - v1.2 */
-			case 1:	/* MMC v1.4 */
-				/*sprintf((char *)mmc_dev.vendor,
-						"Man %02x%02x%02x \"%c%c%c%c%c%c%c\" Date %02u/%04u",
-						UNSTUFF_BITS(resp, 120, 8), UNSTUFF_BITS(resp, 112, 8),
-						UNSTUFF_BITS(resp, 104, 8), UNSTUFF_BITS(resp, 96, 8),
-						UNSTUFF_BITS(resp, 88, 8), UNSTUFF_BITS(resp, 80, 8),
-						UNSTUFF_BITS(resp, 72, 8), UNSTUFF_BITS(resp, 64, 8),
-						UNSTUFF_BITS(resp, 56, 8), UNSTUFF_BITS(resp, 48, 8),
-						UNSTUFF_BITS(resp, 12, 4), UNSTUFF_BITS(resp, 8, 4) + 1997);
-				sprintf((char *)mmc_dev.revision, "%d.%d",
-						UNSTUFF_BITS(resp, 44, 4), UNSTUFF_BITS(resp, 40, 4));
-				sprintf((char *)mmc_dev.product, "%u",
-						UNSTUFF_BITS(resp, 16, 24));*/
-				break;
-			case 2:	/* MMC v2.0 - v2.2 */
-			case 3:	/* MMC v3.1 - v3.3 */
-			case 4:	/* MMC v4 */
-				/*sprintf((char *)mmc_dev.vendor,
-						"Man %02x OEM %04x \"%c%c%c%c%c%c\" Date %02u/%04u",
-						UNSTUFF_BITS(resp, 120, 8), UNSTUFF_BITS(resp, 104, 16),
-						UNSTUFF_BITS(resp, 96, 8), UNSTUFF_BITS(resp, 88, 8),
-						UNSTUFF_BITS(resp, 80, 8), UNSTUFF_BITS(resp, 72, 8),
-						UNSTUFF_BITS(resp, 64, 8), UNSTUFF_BITS(resp, 56, 8),
-						UNSTUFF_BITS(resp, 12, 4), UNSTUFF_BITS(resp, 8, 4) + 1997);
-				sprintf((char *)mmc_dev.revision,
-						"N/A");
-				sprintf((char *)mmc_dev.product, "%u",
-						UNSTUFF_BITS(resp, 16, 32));*/
-				break;
-			default:
-				//printf("MMC card has unknown MMCA version %d\n", spec_ver);
-				break;
-		}
-	}
+	/*
+	 * SD doesn't currently have a version field so we will
+	 * have to assume we can parse this.
+	 */
+	DEBUG((EFI_D_ERROR, "Man %02x OEM %c%c \"%c%c%c%c%c\" Date %02u/%04u\n",
+			UNSTUFF_BITS(resp, 120, 8), UNSTUFF_BITS(resp, 112, 8),
+			UNSTUFF_BITS(resp, 104, 8), UNSTUFF_BITS(resp, 96, 8),
+			UNSTUFF_BITS(resp, 88, 8), UNSTUFF_BITS(resp, 80, 8),
+			UNSTUFF_BITS(resp, 72, 8), UNSTUFF_BITS(resp, 64, 8),
+			UNSTUFF_BITS(resp, 8, 4), UNSTUFF_BITS(resp, 12, 8) + 2000));
+    DEBUG((EFI_D_ERROR, "%d.%d\n", UNSTUFF_BITS(resp, 60, 4), UNSTUFF_BITS(resp, 56, 4) ));
+	DEBUG((EFI_D_ERROR, "%u\n", UNSTUFF_BITS(resp, 24, 32) ));//(char *)mmc_dev.product
+	
 	DEBUG((EFI_D_ERROR, "%s card.\nVendor: %s\nProduct: %s\nRevision: %s\n",
 	       (IF_TYPE_SD == mmc_dev.if_type) ? "SD" : "MMC",
 		   mmc_dev.vendor, mmc_dev.product, mmc_dev.revision));
@@ -314,32 +275,17 @@ static void mmc_decode_csd(uint32_t * resp)
     unsigned int high_capacity = 0;
     unsigned long int size_MB;
 
-	if (IF_TYPE_SD == mmc_dev.if_type) {
-		csd_struct = UNSTUFF_BITS(resp, 126, 2);
-        switch (csd_struct) {
-			case 0:
-				break;
-			case 1:
-				high_capacity = 1;
-				break;
-			default:
-				DEBUG((EFI_D_ERROR, "SD: unrecognised CSD structure version %d\n", csd_struct));
-				return;
-        }
-	} else {
-		/*
-		 * We only understand CSD structure v1.1 and v1.2.
-		 * v1.2 has extra information in bits 15, 11 and 10.
-		 */
-		csd_struct = UNSTUFF_BITS(resp, 126, 2);
-		if (csd_struct != 1 && csd_struct != 2) {
-			DEBUG((EFI_D_ERROR, "MMC: unrecognised CSD structure version %d\n", csd_struct));
+	csd_struct = UNSTUFF_BITS(resp, 126, 2);
+    switch (csd_struct) {
+		case 0:
+			break;
+		case 1:
+			high_capacity = 1;
+			break;
+		default:
+			DEBUG((EFI_D_ERROR, "SD: unrecognised CSD structure version %d\n", csd_struct));
 			return;
-		}
-		spec_ver = UNSTUFF_BITS(resp, 122, 4);
-		mmc_dev.if_type = IF_TYPE_MMC;
-	}
-
+    }
     mmc_dev.blksz = 1 << UNSTUFF_BITS(resp, 80, 4);
 
     if (high_capacity == 0) {
@@ -351,15 +297,6 @@ static void mmc_decode_csd(uint32_t * resp)
         mmc_dev.lba = (1 + UNSTUFF_BITS(resp, 48, 16)) * 1024;
         size_MB = ((1 + UNSTUFF_BITS(resp, 48, 16)) * mmc_dev.blksz) / 1024;
     }
-
-	/* FIXME: The following just makes assumes that's the partition type -- should really read it */
-	mmc_dev.part_type 	= PART_TYPE_DOS;
-	mmc_dev.dev 		= 0;
-	mmc_dev.lun 		= 0;
-	mmc_dev.type 		= DEV_TYPE_HARDDISK;
-	mmc_dev.removable 	= 0;
-	//mmc_dev.block_read 	= mmc_bread;
-	mmc_dev.block_write = mmc_bwrite;
 
 	DEBUG((EFI_D_ERROR, "Detected: %lu blocks of %lu bytes (%luMB) ",
 			mmc_dev.lba,
