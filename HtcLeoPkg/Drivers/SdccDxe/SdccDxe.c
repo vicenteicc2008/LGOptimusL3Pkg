@@ -331,16 +331,17 @@ MMCHSInitialize(
 			DEBUG((EFI_D_ERROR, "MMCHSInitialize eMMC slot 1 init ok!\n"));
 		}
 		
-		//gMMCHSMedia.LastBlock = (UINT64)((mmc_card.capacity / 512) - 1);
+		gMMCHSMedia.LastBlock = (UINT32) mmc_dev.lba;
+        gMMCHSMedia.BlockSize = mmc_dev.blksz;
 
-		UINT32 blocksize = 512; //mmc_get_device_blocksize();
+		UINT32 blocksize = gMMCHSMedia.BlockSize;
 
 		DEBUG((EFI_D_ERROR, "SD Block Size:%d\n", blocksize));
 
         UINT8 BlkDump[512];
 		ZeroMem(BlkDump, 512);
 		BOOLEAN FoundMbr = FALSE;
-		for (UINTN i = 0; i <= MIN(512, 50); i++) //MIN(mBlkDesc.lba, 50)
+		for (UINTN i = 0; i <= MIN(gMMCHSMedia.LastBlock, 50); i++) //512
 		{
             int blk = mmc_bread(i, 1, &BlkDump);
             if (blk)

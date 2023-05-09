@@ -33,11 +33,12 @@
 #include <Library/qcom_mmc.h>
 #include <Library/reg.h>
 #include <Library/adm.h>
+#include <Library/part.h>
 
 #include <Library/LKEnvLib.h>
 
 
-
+extern block_dev_desc_t mmc_dev;
 //extern struct mmc_host mmc_host;
 //extern struct mmc_card mmc_card;
 

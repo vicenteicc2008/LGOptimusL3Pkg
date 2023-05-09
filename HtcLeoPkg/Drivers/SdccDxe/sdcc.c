@@ -89,6 +89,8 @@ static int write_a_block_dm(uint32_t block_number, uint32_t num_blocks, uint32_t
 static int SD_MCLK_set(enum SD_MCLK_speed speed);
 static int SDCn_init(uint32_t instance);
 
+block_dev_desc_t mmc_dev;
+
 block_dev_desc_t *mmc_get_dev(int dev)
 {
 	return ((block_dev_desc_t *) &mmc_dev);
