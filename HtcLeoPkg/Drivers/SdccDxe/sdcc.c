@@ -101,15 +101,10 @@ ulong mmc_bwrite(int dev_num, ulong blknr, unsigned long blkcnt, const void *src
 	return 0;
 }
 
-/* IN USE */
 ulong mmc_bread(UINT32 start, UINT32 blkcnt, void *dst)
 {
 	int err;
 	UINT32 cur, blocks_todo = blkcnt;
-
-	/*
-	 * Might be needed to set blocklen here
-	}*/
 
 	do {
 		cur = 1;
@@ -127,7 +122,6 @@ ulong mmc_bread(UINT32 start, UINT32 blkcnt, void *dst)
 	return blkcnt;
 }
 
-/* IN USE */
 int mmc_legacy_init()
 {
     int rc = -ENODEV;
