@@ -203,12 +203,16 @@ MMCHSReadBlocks(
 	ret = MmcReadInternal((UINT64) Lba * 512, Buffer, BufferSize);
 	
 	if (ret == 1)
+    {
         return EFI_SUCCESS;
+    }
     else
+    {
         DEBUG((EFI_D_ERROR, "MMCHSReadBlocks: Read error!\n"));
         mdelay(5000);
         return EFI_DEVICE_ERROR;
-	
+    }
+    
 	return Status;
 }
 
