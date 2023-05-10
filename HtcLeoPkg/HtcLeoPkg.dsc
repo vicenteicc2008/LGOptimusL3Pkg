@@ -225,6 +225,7 @@
   # SoC Drivers
   HtcLeoPkg/Drivers/ClockDxe/ClockDxe.inf
   HtcLeoPkg/Drivers/GpioDxe/GpioDxe.inf
+  HtcLeoPkg/Drivers/SdccDxe/SdccDxe.inf
 
   #
   # Virtual Keyboard
