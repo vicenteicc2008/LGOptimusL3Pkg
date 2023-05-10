@@ -22,7 +22,6 @@
   **/
 
 #include "SdccDxe.h"
-#include <Library/gpio.h>
 
 EFI_BLOCK_IO_MEDIA gMMCHSMedia = 
 {
@@ -110,8 +109,6 @@ STATIC UINT32 MmcReadInternal
 
     // Set size 
     ReadSize = BlockSize;
-
-	DEBUG((EFI_D_ERROR, "ReadSize / BlockSize=%d\n", (ReadSize/BlockSize)));
 
     while (DataLen > ReadSize) 
     {
@@ -300,7 +297,7 @@ MMCHSInitialize(
 	IN EFI_SYSTEM_TABLE   *SystemTable
 )
 {
-	EFI_STATUS  Status;
+	EFI_STATUS  Status = EFI_DEVICE_ERROR;
 
 	if (!gpio_get(HTCLEO_GPIO_SD_STATUS)) {
         DEBUG((EFI_D_INFO, "SD card inserted\n"));
@@ -308,11 +305,11 @@ MMCHSInitialize(
 		/* Trying Slot 1 first */
 		if (mmc_legacy_init())
 		{
-			DEBUG((EFI_D_ERROR, "MMCHSInitialize eMMC slot 1 init failed!\n"));
+			DEBUG((EFI_D_ERROR, "Sdcc init failed!\n"));
 		}
 		else
 		{
-			DEBUG((EFI_D_INFO, "MMCHSInitialize eMMC slot 1 init ok!\n"));
+			DEBUG((EFI_D_INFO, "Sdcc init ok!\n"));
 		}
 		
 		gMMCHSMedia.LastBlock = (UINT32) mmc_dev.lba;
@@ -320,7 +317,7 @@ MMCHSInitialize(
 
 		UINT32 blocksize = gMMCHSMedia.BlockSize;
 
-		DEBUG((EFI_D_ERROR, "SD Block Size:%d\n", blocksize));
+		DEBUG((EFI_D_INFO, "SD Block Size:%d\n", blocksize));
 
         UINT8 BlkDump[512];
 		ZeroMem(BlkDump, 512);
@@ -356,11 +353,8 @@ MMCHSInitialize(
 		return Status;
 	}
 	else {
-
 		DEBUG((EFI_D_ERROR, "SD card not inserted\n"));
-		DEBUG((EFI_D_ERROR, "SD status : %x\n", gpio_get(153)));
 
-		Status = 0;
 		return Status;
 	}
 }

@@ -33,6 +33,7 @@
 #include <Library/reg.h>
 #include <Library/adm.h>
 #include <Library/part.h>
+#include <Library/gpio.h>
 
 #include <Library/LKEnvLib.h>
 
