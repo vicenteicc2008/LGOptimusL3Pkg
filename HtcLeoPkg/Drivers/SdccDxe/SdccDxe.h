@@ -30,17 +30,12 @@
 
 #include <Chipset/iomap.h>
 #include <Chipset/clock.h>
-#include <Library/qcom_mmc.h>
 #include <Library/reg.h>
 #include <Library/adm.h>
 #include <Library/part.h>
 
 #include <Library/LKEnvLib.h>
 
-
-extern block_dev_desc_t mmc_dev;
-//extern struct mmc_host mmc_host;
-//extern struct mmc_card mmc_card;
 
 #define MAX_RETRY_COUNT  (100*5)
 
@@ -183,5 +178,6 @@ typedef struct
 
 
 extern EFI_BLOCK_IO_PROTOCOL gBlockIo;
+extern block_dev_desc_t mmc_dev;
 
 #endif

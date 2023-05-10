@@ -205,17 +205,6 @@ int mmc_legacy_init()
 		return rc;
     }
 
-	DEBUG((EFI_D_ERROR,"Read the first block of the SD card as a sanity check.\n"));
-
-	if(!read_a_block(0, &buffer[0]))
-    {
-		DEBUG((EFI_D_ERROR,"SD - error first block\n\r"));
-       
-		return rc;
-    } else {
-		DEBUG((EFI_D_ERROR,"SD - block read successful\n\r"));
-    }
-
     // Valid SD card found
     mmc_dev.if_type = IF_TYPE_SD;
     mmc_decode_csd(csd);
