@@ -25,26 +25,28 @@ steps:
   displayName: Make work directory
 
 - script: |
-      cd /home/vsts/work/1/s/.git/
+      cd /home/vsts/work/1/s/
+      ls
+      ls ../
       git clone https://github.com/Tianocore/edk2.git --recursive --depth=1
       git clone https://github.com/tianocore/edk2-platforms.git --depth=1
   displayName: Clone sources
 
 - script:  |
-      cd /home/vsts/work/edk2stuff/edk2
+      cd /home/vsts/work/1/s/
       make -C BaseTools/
   displayName: Build BaseTools
 
 - script: |
-      cd /home/vsts/work/edk2stuff/HtcLeoPkg
-      export PACKAGES_PATH=$PWD/home/vsts/work/edk2stuff/edk2:$PWD/home/vsts/work/edk2stuff/edk2-platforms:$PWD
+      cd /home/vsts/work/1/s/HtcLeoPkg
+      export PACKAGES_PATH=$PWD/home/vsts/work/1/s/edk2:$PWD/home/vsts/work/1/s/edk2-platforms:$PWD
       export WORKSPACE=$PWD/workspace
-      . /home/vsts/work/edk2stuff/edk2/edksetup.sh
+      . /home/vsts/work/1/s/edk2/edksetup.sh
       chmod a+x build.sh
       ./build.sh
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Htc Leo UEFI build'
   inputs: 
-    pathtoPublish: /home/vsts/work/edk2stuff/HtcLeoPkg/ImageResources/uefi.img
+    pathtoPublish: /home/vsts/work/1/s/HtcLeoPkg/ImageResources/uefi.img
     artifactName: Htc Leo UEFI
