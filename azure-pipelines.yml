@@ -38,7 +38,7 @@ steps:
   displayName: Build BaseTools
 
 - script: |
-      cd /home/vsts/work/1/s/HtcLeoPkg
+      cd /home/vsts/work/1/s/
       export PACKAGES_PATH=$PWD/home/vsts/work/1/s/edk2:$PWD/home/vsts/work/1/s/edk2-platforms:$PWD
       export WORKSPACE=$PWD/workspace
       . /home/vsts/work/1/s/edk2/edksetup.sh
