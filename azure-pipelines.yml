@@ -25,9 +25,8 @@ steps:
   displayName: Make work directory
 
 - script: |
-      cd /home/vsts/work/edk2stuff
+      cd /home/vsts/work/1/s/.git/
       git clone https://github.com/Tianocore/edk2.git --recursive --depth=1
-      git clone https://github.com/HTC-Leo-Revival-Project/HtcLeoPkg.git --depth=1
       git clone https://github.com/tianocore/edk2-platforms.git --depth=1
   displayName: Clone sources
 
