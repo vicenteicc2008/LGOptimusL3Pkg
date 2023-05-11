@@ -33,7 +33,7 @@ steps:
   displayName: Clone sources
 
 - script:  |
-      cd /home/vsts/work/1/s/
+      cd /home/vsts/work/1/s/edk2/
       make -C BaseTools/
   displayName: Build BaseTools
 
