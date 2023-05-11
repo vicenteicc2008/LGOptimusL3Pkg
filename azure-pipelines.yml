@@ -41,6 +41,7 @@ steps:
       cd /home/vsts/work/1/s/
       export PACKAGES_PATH=$PWD/home/vsts/work/1/s/edk2:$PWD/home/vsts/work/1/s/edk2-platforms:$PWD
       export WORKSPACE=$PWD/workspace
+      chmod +x /home/vsts/work/1/s/edk2/edksetup.sh
       . /home/vsts/work/1/s/edk2/edksetup.sh
       chmod a+x build.sh
       ./build.sh
