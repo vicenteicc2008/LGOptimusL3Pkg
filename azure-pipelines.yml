@@ -21,28 +21,29 @@ steps:
 - script:  sudo apt -y install build-essential uuid-dev iasl git nasm python3-distutils crossbuild-essential-armel skales gcc-arm-linux-gnueabihf mkbootimg
   displayName: 'Install VSTS dependencies'
 
-- script: mkdir /home/vsts/work/edk2stuff
-  displayName: Make work directory
+- script: sudo ln -sfn $(pwd) ../Lumia950XLPkg
+  displayName: 'Fix directory links'
+
+- script: sudo ln -sfn /home/vsts/work/1/s/ /home/vsts/work/1/HtcLeoPkg
+  displayName: 'Fix directory links'
 
 - script: |
-      cd /home/vsts/work/1/s/
-      ls
-      ls ../
+      cd /home/vsts/work/1/
       git clone https://github.com/Tianocore/edk2.git --recursive --depth=1
       git clone https://github.com/tianocore/edk2-platforms.git --depth=1
   displayName: Clone sources
 
 - script:  |
-      cd /home/vsts/work/1/s/edk2/
+      cd /home/vsts/work/1/edk2/
       make -C BaseTools/
   displayName: Build BaseTools
 
 - script: |
-      cd /home/vsts/work/1/s/
-      export PACKAGES_PATH=$PWD/home/vsts/work/1/s/edk2:$PWD/home/vsts/work/1/s/edk2-platforms:$PWD
+      cd /home/vsts/work/1/HtcLeoPkg/
+      export PACKAGES_PATH=$PWD/home/vsts/work/1/edk2:$PWD/home/vsts/work/1/edk2-platforms:$PWD
       export WORKSPACE=$PWD/workspace
-      chmod +x /home/vsts/work/1/s/edk2/edksetup.sh
-      . /home/vsts/work/1/s/edk2/edksetup.sh
+      chmod +x /home/vsts/work/1/edk2/edksetup.sh
+      . /home/vsts/work/1/edk2/edksetup.sh
       GCC5_ARM_PREFIX=arm-linux-gnueabihf- build -s -n 0 -a ARM -t GCC5 -p HtcLeoPkg/HtcLeoPkg.dsc
       chmod +x build_boot_shim.sh
       ./build_boot_shim.sh
@@ -52,5 +53,5 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Htc Leo UEFI build'
   inputs: 
-    pathtoPublish: /home/vsts/work/1/s/ImageResources/uefi.img
+    pathtoPublish: /home/vsts/work/1/HtcLeoPkg/ImageResources/uefi.img
     artifactName: Htc Leo UEFI
