@@ -13,6 +13,3 @@ chmod +x build_boot_shim.sh
 cat BootShim/BootShim.bin workspace/Build/QSD8250/DEBUG_GCC5/FV/QSD8250_UEFI.fd >>ImageResources/bootpayload.bin
 
 mkbootimg --kernel ImageResources/bootpayload.bin --base 0x11800000 --kernel_offset 0x00008000 -o ImageResources/uefi.img
-
-- script: sudo ln -sfn /home/vsts/work/1/s/ /home/vsts/work/1/HtcLeoPkg
-  displayName: 'Fix directory links'
