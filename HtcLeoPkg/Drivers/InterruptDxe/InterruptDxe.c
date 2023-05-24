@@ -122,7 +122,7 @@ RegisterInterruptSource (
   }
 
   gRegisteredInterruptHandlers[Source] = Handler;
-  return EFI_SUCCESS;
+  return This->EnableInterruptSource (This, Source);
 }
 
 
