@@ -22,12 +22,10 @@
 #include <Library/PcdLib.h>
 #include <Library/IoLib.h>
 #include <Library/ArmLib.h>
-#include <Library/LKEnvLib.h>
+#include <Library/InterruptsLib.h>
 
 #include <Protocol/Cpu.h>
 #include <Protocol/HardwareInterrupt.h>
-
-#include <Library/InterruptsLib.h>
 
 #include <Chipset/interrupts.h>
 #include <Chipset/irqs.h>
@@ -39,32 +37,32 @@ EFI_EVENT EfiExitBootServicesEvent      = (EFI_EVENT)NULL;
 
 HARDWARE_INTERRUPT_HANDLER  gRegisteredInterruptHandlers[NR_IRQS];
 
-VOID platform_init_interrupts(VOID)
+VOID InitInterrupts(VOID)
 {
-	writel(0xffffffff, VIC_INT_CLEAR0);
-	writel(0xffffffff, VIC_INT_CLEAR1);
-	writel(0, VIC_INT_SELECT0);
-	writel(0, VIC_INT_SELECT1);
-	writel(0xffffffff, VIC_INT_TYPE0);
-	writel(0xffffffff, VIC_INT_TYPE1);
-	writel(0, VIC_CONFIG);
-	writel(1, VIC_INT_EN0);
-	writel(1, VIC_INT_EN1);
-	writel(1, VIC_INT_MASTEREN);
+	MmioWrite32(VIC_INT_CLEAR0, 0xffffffff);
+	MmioWrite32(VIC_INT_CLEAR1, 0xffffffff);
+	MmioWrite32(VIC_INT_SELECT0, 0);
+	MmioWrite32(VIC_INT_SELECT1, 0);
+	MmioWrite32(VIC_INT_TYPE0, 0xffffffff);
+	MmioWrite32(VIC_INT_TYPE1, 0xffffffff);
+	MmioWrite32(VIC_CONFIG, 0);
+	MmioWrite32(VIC_INT_EN0, 1);
+	MmioWrite32(VIC_INT_EN1, 1);
+	MmioWrite32(VIC_INT_MASTEREN, 1);
 }
 
-VOID platform_deinit_interrupts(VOID)
+VOID DeinitInterupts(VOID)
 {
-	writel(0, VIC_INT_MASTEREN);
-	writel(0, VIC_INT_EN0);
-	writel(0, VIC_INT_EN1);
-	writel(0xffffffff, VIC_INT_CLEAR0);
-	writel(0xffffffff, VIC_INT_CLEAR1);
-	writel(0, VIC_INT_SELECT0);
-	writel(0, VIC_INT_SELECT1);
-	writel(0xffffffff, VIC_INT_TYPE0);
-	writel(0xffffffff, VIC_INT_TYPE1);
-	writel(0, VIC_CONFIG);
+	MmioWrite32(VIC_INT_MASTEREN, 0);
+	MmioWrite32(VIC_INT_EN0, 0);
+	MmioWrite32(VIC_INT_EN1, 0);
+	MmioWrite32(VIC_INT_CLEAR0, 0xffffffff);
+	MmioWrite32(VIC_INT_CLEAR1, 0xffffffff);
+	MmioWrite32(VIC_INT_SELECT0, 0);
+	MmioWrite32(VIC_INT_SELECT1, 0);
+	MmioWrite32(VIC_INT_TYPE0, 0xffffffff);
+	MmioWrite32(VIC_INT_TYPE1, 0xffffffff);
+	MmioWrite32(VIC_CONFIG, 0);
 }
 
 /**
@@ -84,7 +82,7 @@ ExitBootServicesEvent (
   )
 {
   // Disable all interrupts
-  platform_deinit_interrupts();
+  DeinitInterupts();
 }
 
 /**
@@ -324,7 +322,7 @@ InterruptDxeInitialize (
   Status = gBS->CreateEvent(EVT_SIGNAL_EXIT_BOOT_SERVICES, TPL_NOTIFY, ExitBootServicesEvent, NULL, &EfiExitBootServicesEvent);
   ASSERT_EFI_ERROR(Status);
 
-  platform_init_interrupts();
+  InitInterrupts();
 
   return Status;
 }
