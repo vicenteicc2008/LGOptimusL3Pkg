@@ -26,6 +26,19 @@ UINT64  mSystemMemoryEnd = FixedPcdGet64 (PcdSystemMemoryBase) +
                            FixedPcdGet64 (PcdSystemMemorySize) - 1;
 
 VOID
+PainScreen(
+  IN  UINTN   Colour
+)
+{
+  UINT8 *start = (UINT8 *)0x02A00000;
+  UINT8 *end = (UINT8 *)0x02ABBB00;  
+
+  for (UINT8 *ptr = start; ptr < end; ptr++) {
+    *ptr = 0;
+  }
+}
+
+VOID
 PrePiMain (
   IN  UINTN   UefiMemoryBase,
   IN  UINTN   StacksBase,
@@ -43,12 +56,7 @@ PrePiMain (
   ArchInitialize ();
 
   // Paint the screen to black
-  UINT8 *start = (UINT8 *)0x02A00000;
-  UINT8 *end = (UINT8 *)0x02ABBB00;  
-
-  for (UINT8 *ptr = start; ptr < end; ptr++) {
-    *ptr = 0;
-  }
+  PainScreen(Black);
 
   // There are still a few things to do
   /* enable cp10 and cp11 */
@@ -94,7 +102,7 @@ PrePiMain (
         UefiMemoryBase,
         StacksBase
     ));
-//here
+
   // Initialize the Debug Agent for Source Level Debugging
   //InitializeDebugAgent (DEBUG_AGENT_INIT_POSTMEM_SEC, NULL, NULL);
   //SaveAndSetDebugTimerInterrupt (TRUE);
