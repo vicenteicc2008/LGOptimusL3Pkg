@@ -109,7 +109,9 @@ RegisterInterruptSource (
   if (Source > NR_IRQS) {
     ASSERT(FALSE);
     return EFI_UNSUPPORTED;
-  } 
+  }
+
+  DEBUG((EFI_D_ERROR, "Registering Vector: %p\n", Source));//debugging
   
   if ((Handler == NULL) && (gRegisteredInterruptHandlers[Source] == NULL)) {
     return EFI_INVALID_PARAMETER;
@@ -120,6 +122,7 @@ RegisterInterruptSource (
   }
 
   gRegisteredInterruptHandlers[Source] = Handler;
+
   return This->EnableInterruptSource (This, Source);
 }
 
@@ -217,7 +220,10 @@ EndOfInterrupt (
   IN HARDWARE_INTERRUPT_SOURCE          Source
   )
 {
-  /* TBD */
+  // Clear after running the handler (Is this really clearing???)
+  MmioWrite32(VIC_IRQ_VEC_WR, 0);
+  ArmDataSynchronizationBarrier ();
+
   return EFI_SUCCESS;
 }
 
@@ -243,7 +249,11 @@ IrqInterruptHandler (
   UINT32                     Vector;
   HARDWARE_INTERRUPT_HANDLER InterruptHandler;
   
-  Vector = MmioRead32 (VIC_IRQ_VEC_PEND_RD);
+  Vector = MmioRead32 (VIC_IRQ_VEC_RD);
+
+  DEBUG((EFI_D_INFO, "Vector: %p\n", Vector));//debugging
+
+  MmioWrite32((Vector > 31) ? VIC_INT_CLEAR1 : VIC_INT_CLEAR0, 1 << (Vector & 31));
 
   // Needed to prevent infinite nesting when Time Driver lowers TPL
   ArmDataSynchronizationBarrier ();
@@ -253,6 +263,9 @@ IrqInterruptHandler (
     // Call the registered interrupt handler.
     InterruptHandler (Vector, SystemContext);
   }
+
+  // Clear after running the handler (Is this really clearing???)
+  MmioWrite32(VIC_IRQ_VEC_WR, 0);
   ArmDataSynchronizationBarrier ();
 }
 
