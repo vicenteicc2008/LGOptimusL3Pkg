@@ -33,6 +33,7 @@
 
 #define DGT_ENABLE_CLR_ON_MATCH_EN        2
 #define DGT_ENABLE_EN                     1
+#define DGT_HZ 4800000	/* Uses TCXO/4 (19.2 MHz / 4) */
 
 //
 // Notifications
@@ -193,12 +194,19 @@ TimerDriverSetTimerPeriod (
   
   if (TimerPeriod == 0) 
   {
-    /* Disable the timer interrupt */
-    Status = gInterrupt->DisableInterruptSource(gInterrupt, gVector);
+    // Turn off the timer.
     MmioWrite32(DGT_ENABLE, 0);
+    Status = gInterrupt->DisableInterruptSource(gInterrupt, gVector);
   } 
   else 
   {
+    /* Disable the timer interrupt */
+    Status = gInterrupt->DisableInterruptSource(gInterrupt, gVector);
+
+    MmioWrite32(DGT_MATCH_VAL, TimerPeriod * (DGT_HZ / 1000));
+	  MmioWrite32(DGT_CLEAR, 0);
+	  MmioWrite32(DGT_ENABLE, DGT_ENABLE_EN | DGT_ENABLE_CLR_ON_MATCH_EN);
+
     /* Enable the timer interrupt */
     Status = gInterrupt->EnableInterruptSource(gInterrupt, gVector);
   }
@@ -362,7 +370,7 @@ TimerInitialize (
   ASSERT_EFI_ERROR (Status);
 
   // Set up default timer (10ms period)
-  Status = TimerDriverSetTimerPeriod (&gTimer, 100000); /* Change to FixedPcdGet32(PcdTimerPeriod) later */
+  Status = TimerDriverSetTimerPeriod (&gTimer, FixedPcdGet32(PcdTimerPeriod));
   ASSERT_EFI_ERROR (Status);
 
   // Install the Timer Architectural Protocol onto a new handle
