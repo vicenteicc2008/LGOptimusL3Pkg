@@ -52,18 +52,6 @@ EFI_HARDWARE_INTERRUPT_PROTOCOL *gInterrupt = NULL;
 // Cached interrupt vector
 volatile UINTN  gVector;
 
-static void wait_for_timer_op(void)
-{
-	//not needed on qsd8k
-}
-
-
-//void platform_uninit_timer(void)
-//{
-//	writel(0, DGT_ENABLE);
-//	writel(0, DGT_CLEAR);
-//}
-
 /**
 
   C Interrupt Handler calledin the interrupt context when Source interrupt is active.
