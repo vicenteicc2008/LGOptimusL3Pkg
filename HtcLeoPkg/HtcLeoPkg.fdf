@@ -66,7 +66,6 @@ APRIORI DXE {
   INF MdeModulePkg/Universal/WatchdogTimerDxe/WatchdogTimer.inf
   INF MdeModulePkg/Universal/SecurityStubDxe/SecurityStubDxe.inf
   INF EmbeddedPkg/MetronomeDxe/MetronomeDxe.inf
-  INF HtcLeoPkg/Drivers/HeartbeatDxe/HeartbeatDxe.inf
 
   #
   # FAT filesystem + GPT/MBR partitioning
@@ -107,7 +106,6 @@ APRIORI DXE {
   INF MdeModulePkg/Universal/ResetSystemRuntimeDxe/ResetSystemRuntimeDxe.inf
   INF EmbeddedPkg/RealTimeClockRuntimeDxe/RealTimeClockRuntimeDxe.inf
   INF EmbeddedPkg/MetronomeDxe/MetronomeDxe.inf
-  INF HtcLeoPkg/Drivers/HeartbeatDxe/HeartbeatDxe.inf
 
   #
   # Multiple Console IO support
@@ -121,6 +119,7 @@ APRIORI DXE {
   INF HtcLeoPkg/Drivers/TimerDxe/TimerDxe.inf
 
   INF MdeModulePkg/Universal/WatchdogTimerDxe/WatchdogTimer.inf
+  INF HtcLeoPkg/Drivers/HeartbeatDxe/HeartbeatDxe.inf
 
   # SoC Drivers
   INF HtcLeoPkg/Drivers/ClockDxe/ClockDxe.inf

@@ -46,5 +46,5 @@
   # Timer
   gHtcLeoPkgTokenSpaceGuid.PcdTimerFreqInHz|4800000|UINT32|0x0000a406
 
-  # RTC information
-   gHtcLeoPkgTokenSpaceGuid.PcdBootShimInfo1|0xb0000000|UINT64|0x00000a601
+  # Interrupt Controller
+  gArmTokenSpaceGuid.PcdVicBase|0xAC000000|UINT32|0x0000a407
