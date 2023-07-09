@@ -27,9 +27,9 @@ VOID EFIAPI LedHeartbeatCallback(
 )
 {
     // Turn on button backlight
-    gpio_set(HTCLEO_GPIO_KP_LED,1);
+    gpio_set(HTCLEO_GPIO_KP_LED, 1);
 	mdelay(500);
-	gpio_set(HTCLEO_GPIO_KP_LED,0);
+	gpio_set(HTCLEO_GPIO_KP_LED, 0);
 }
 
 EFI_STATUS
@@ -41,11 +41,6 @@ HeartbeatDxeInitialize(
 {
     EFI_STATUS Status;
 
-    // Turn the keypad backlight on once
-    gpio_set(HTCLEO_GPIO_KP_LED,1);
-	mdelay(500);
-	gpio_set(HTCLEO_GPIO_KP_LED,0);
-
     Status = gBS->CreateEvent(
         EVT_NOTIFY_SIGNAL | EVT_TIMER,
         TPL_CALLBACK, LedHeartbeatCallback, NULL,
@@ -56,7 +51,7 @@ HeartbeatDxeInitialize(
 
     Status = gBS->SetTimer(
         m_CallbackTimer, TimerPeriodic,
-        EFI_TIMER_PERIOD_MILLISECONDS(500)
+        EFI_TIMER_PERIOD_MILLISECONDS(1)
     );
 
     ASSERT_EFI_ERROR(Status);
