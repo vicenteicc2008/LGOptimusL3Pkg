@@ -13,10 +13,10 @@
 [Packages]
   MdePkg/MdePkg.dec
   ArmPkg/ArmPkg.dec
-  Lumia950XLPkg/Lumia950XLPkg.dec
+  HtcLeoPkg/HtcLeoPkg.dec
 
 [LibraryClasses]
+  MsmTargetGpioLib
   KeypadDeviceHelperLib
-  Pm8x41Lib
   TimerLib
-  GpioTlmmLib
+  

@@ -8,7 +8,7 @@
 
 [Packages]
   MdePkg/MdePkg.dec
-  Lumia950XLPkg/Lumia950XLPkg.dec
+  HtcLeoPkg/HtcLeoPkg.dec
 
 [LibraryClasses]
   BaseLib
