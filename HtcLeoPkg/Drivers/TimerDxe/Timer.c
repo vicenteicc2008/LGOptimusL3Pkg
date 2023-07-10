@@ -191,7 +191,10 @@ TimerDriverSetTimerPeriod (
     /* Disable the timer interrupt */
     Status = gInterrupt->DisableInterruptSource(gInterrupt, gVector);
 
-    MmioWrite32(DGT_MATCH_VAL, TimerPeriod * (DGT_HZ / 1000));
+    // The code expects time in ms
+    TimerCount = TimerPeriod / 100;
+
+    MmioWrite32(DGT_MATCH_VAL, TimerCount * (DGT_HZ / 1000));
 	  MmioWrite32(DGT_CLEAR, 0);
 	  MmioWrite32(DGT_ENABLE, DGT_ENABLE_EN | DGT_ENABLE_CLR_ON_MATCH_EN);
 
@@ -357,8 +360,12 @@ TimerInitialize (
   Status = gInterrupt->RegisterInterruptSource (gInterrupt, gVector, TimerInterruptHandler);
   ASSERT_EFI_ERROR (Status);
 
-  // Set up default timer (10ms period)
-  Status = TimerDriverSetTimerPeriod (&gTimer, FixedPcdGet32(PcdTimerPeriod));
+  // Set up default timer (1ms period)
+  // 1 Milliseconds = 1000000 Nanoseconds
+  /* TimerDriverSetTimerPeriod expects time in 100 nanoseconds units
+   * and edk2 wants 1ms period
+   * 1ms = 100 * 10000 ns */
+  Status = TimerDriverSetTimerPeriod (&gTimer, FixedPcdGet32(PcdTimerPeriod));//10000
   ASSERT_EFI_ERROR (Status);
 
   // Install the Timer Architectural Protocol onto a new handle
