@@ -5,7 +5,7 @@
   MODULE_TYPE                    = DXE_DRIVER
   VERSION_STRING                 = 1.0
 
-  ENTRY_POINT                    = KeypadDeviceDxeInitialize
+  ENTRY_POINT                    = efi_main
 
 [Sources.common]
   GenericKeypadDevice.c
@@ -14,12 +14,14 @@
   MdePkg/MdePkg.dec
   ArmPkg/ArmPkg.dec
   EmbeddedPkg/EmbeddedPkg.dec
-  Lumia930Pkg/Lumia930Pkg.dec
+  Lumia950XLPkg/Lumia950XLPkg.dec
 
 [LibraryClasses]
   UefiDriverEntryPoint
   MemoryAllocationLib
   KeypadDeviceImplLib
+  IoLib
+  ArmLib
 
 [Protocols]
   gEFIDroidKeypadDeviceProtocolGuid
