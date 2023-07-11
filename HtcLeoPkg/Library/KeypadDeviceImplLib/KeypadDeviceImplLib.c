@@ -161,7 +161,7 @@ KeypadDeviceImplConstructor(VOID)
 EFI_STATUS EFIAPI KeypadDeviceImplReset(KEYPAD_DEVICE_PROTOCOL *This)
 {
   LibKeyInitializeKeyContext(&KeyContextPower.EfiKeyContext);
-  KeyContextPower.EfiKeyContext.KeyData.Key.UnicodeChar = CHAR_CARRIAGE_RETURN;
+  KeyContextPower.EfiKeyContext.KeyData.Key.UnicodeChar = SCAN_ESC;
 
   LibKeyInitializeKeyContext(&KeyContextVolumeUp.EfiKeyContext);
   KeyContextVolumeUp.EfiKeyContext.KeyData.Key.ScanCode = SCAN_UP;
@@ -169,21 +169,17 @@ EFI_STATUS EFIAPI KeypadDeviceImplReset(KEYPAD_DEVICE_PROTOCOL *This)
   LibKeyInitializeKeyContext(&KeyContextVolumeDown.EfiKeyContext);
   KeyContextVolumeDown.EfiKeyContext.KeyData.Key.ScanCode = SCAN_DOWN;
 
-  // ToDo: replace with different keys that are returned
-
   LibKeyInitializeKeyContext(&KeyContextBack.EfiKeyContext);
-  KeyContextBack.EfiKeyContext.KeyData.Key.ScanCode = SCAN_DOWN;
+  KeyContextBack.EfiKeyContext.KeyData.Key.ScanCode = CHAR_BACKSPACE;
 
   LibKeyInitializeKeyContext(&KeyContextWindows.EfiKeyContext);
-  KeyContextWindows.EfiKeyContext.KeyData.Key.ScanCode = SCAN_DOWN;
+  KeyContextWindows.EfiKeyContext.KeyData.Key.ScanCode = CHAR_TAB;
 
   LibKeyInitializeKeyContext(&KeyContextHome.EfiKeyContext);
-  KeyContextHome.EfiKeyContext.KeyData.Key.ScanCode = SCAN_DOWN;
+  KeyContextHome.EfiKeyContext.KeyData.Key.ScanCode = SCAN_HOME;
 
   LibKeyInitializeKeyContext(&KeyContextDial.EfiKeyContext);
-  KeyContextDial.EfiKeyContext.KeyData.Key.ScanCode = SCAN_DOWN;
-
-  // Todo: end
+  KeyContextDial.EfiKeyContext.KeyData.Key.ScanCode = CHAR_CARRIAGE_RETURN;
 
   return EFI_SUCCESS;
 }
