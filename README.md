@@ -4,6 +4,7 @@ Attempt to create a normal EDK2 for HTC HD2.
 ## Status 
 * Boots to EFI Shell
 * SD card is working
+* Buttons are working
 
 ## To-Do
 Get to load ReactOS /s
