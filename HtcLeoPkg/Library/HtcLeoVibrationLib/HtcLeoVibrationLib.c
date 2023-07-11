@@ -13,10 +13,6 @@
 **/
 
 #include <Library/DebugLib.h>
-#include <Library/qcom_qsd8250_iomap.h>
-#include <Library/HtcLeoGpio.h>
-#include <Library/qcom_lk.h>
-#include <Library/qcom_qsd8250_timer.h>
 #include <Library/gpio.h>
 
 
@@ -30,8 +26,30 @@ VOID EFIAPI htcleo_vibrate_once(){
   htcleo_vibrate(0);
 }
 
-VOID EFIAPI htcleo_vibrate_timer(unsigned msecs){
-  htcleo_vibrate(1);
-  mdelay(msecs);
+EFI_EVENT m_CallbackTimer         = NULL;
+EFI_EVENT m_ExitBootServicesEvent = NULL;
+
+// Callback function to disable the GPIO after a certain time
+VOID EFIAPI htcleo_diable_vibrat_timer(IN EFI_EVENT Event, IN VOID *Context)
+{
+  // Disable the GPIO
   htcleo_vibrate(0);
+}
+
+// Function to enable the GPIO and schedule the callback
+VOID htcleo_vibrate_timer(unsigned msecs)
+{
+  htcleo_vibrate(1);
+  EFI_STATUS Status;
+
+  Status = gBS->CreateEvent(
+      EVT_NOTIFY_SIGNAL | EVT_TIMER, TPL_CALLBACK, htcleo_diable_vibrat_timer, NULL,
+      &m_CallbackTimer);
+
+  ASSERT_EFI_ERROR(Status);
+
+  Status = gBS->SetTimer(
+      m_CallbackTimer, TimerPeriodic, EFI_TIMER_PERIOD_MILLISECONDS(msecs));
+
+  ASSERT_EFI_ERROR(Status);
 }
