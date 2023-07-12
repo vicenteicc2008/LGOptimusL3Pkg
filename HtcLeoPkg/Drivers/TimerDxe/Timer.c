@@ -192,7 +192,7 @@ TimerDriverSetTimerPeriod (
     Status = gInterrupt->DisableInterruptSource(gInterrupt, gVector);
 
     // The code expects time in ms
-    TimerCount = TimerPeriod / 100;
+    TimerCount = TimerPeriod / 10000;
 
     MmioWrite32(DGT_MATCH_VAL, TimerCount * (DGT_HZ / 1000));
 	  MmioWrite32(DGT_CLEAR, 0);
