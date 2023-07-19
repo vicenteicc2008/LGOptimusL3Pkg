@@ -1,11 +1,11 @@
 #include "Core.h"
+#include <Chipset/timer.h>
 #include <Library/DebugLib.h>
 #include <Library/UefiBootServicesTableLib.h>
 #include <Library/gpio.h>
 #include <Library/keypad.h>
 #include <Protocol/Timer.h>
 #include <Uefi.h>
-#include <Chipset/timer.h>
 
 void timerCallback(EFI_EVENT event, void *context);
 void togglePause(Core *this);
@@ -23,155 +23,60 @@ void handleInput(Core *this)
   if (status != EFI_NOT_READY) {
     ASSERT_EFI_ERROR(status);
 
-
     if (this->gameState == GAME_STATE_WAITING_FOR_START) {
       startGame(this);
     }
-    else if (key.ScanCode == CHAR_BACKSPACE) {
-      if (this->gameState == GAME_STATE_RUNNING ||
-          this->gameState == GAME_STATE_PAUSED) {
-        togglePause(this);
-      }
-    }
-    else if (key.ScanCode == SCAN_HOME) {
-      if (this->gameState == GAME_STATE_RUNNING) {
-        this->board->dropPiece(this->board);
-        resetTickCounter(this);
-      }
-    }
     else {
-      if (key.ScanCode == CHAR_TAB) {
+      switch (key.ScanCode) {
+      case CHAR_BACKSPACE:
+        if (this->gameState == GAME_STATE_RUNNING ||
+            this->gameState == GAME_STATE_PAUSED) {
+          togglePause(this);
+        }
+        break;
+
+      case SCAN_HOME:
+        if (this->gameState == GAME_STATE_RUNNING) {
+          this->board->dropPiece(this->board);
+          resetTickCounter(this);
+        }
+        break;
+
+      case CHAR_TAB:
         if (this->gameState == GAME_STATE_RUNNING) {
           this->board->rotatePiece(this->board);
         }
-      }
-      else if (key.ScanCode == SCAN_RIGHT) {
+        break;
+
+      case CHAR_CARRIAGE_RETURN:
         if (this->gameState == GAME_STATE_RUNNING) {
           if (!this->board->movePieceDown(this->board)) {
             resetTickCounter(this);
           }
         }
-      }
-      else if (key.ScanCode == SCAN_UP) {
+        break;
+
+      case SCAN_UP:
         if (this->gameState == GAME_STATE_RUNNING) {
           this->board->movePieceLeft(this->board);
         }
-      }
-      else if (key.ScanCode == SCAN_DOWN) {
+        break;
+
+      case SCAN_DOWN:
         if (this->gameState == GAME_STATE_RUNNING) {
           this->board->movePieceRight(this->board);
         }
-      }
-      else if (key.ScanCode == SCAN_ESC) {
+        break;
+
+      case SCAN_ESC:
         this->gameState = GAME_STATE_EXIT;
-      }
-      else if (key.ScanCode == SCAN_PAGE_UP) {
-        if (this->gameState != GAME_STATE_OVER &&
-            this->board->level < MAX_LEVEL) {
-          this->board->level++;
-        }
-      }
-      else if (key.ScanCode == SCAN_PAGE_DOWN) {
-        if (this->gameState != GAME_STATE_OVER && this->board->level >= 1) {
-          this->board->level--;
-        }
+        break;
+      default:
+        break;
       }
     }
   }
 }
-
-// static struct gpio_keypad_info htcleo_keypad_info = {
-//     .keymap       = htcleo_keymap,
-//     .output_gpios = key_rowgpio,
-//     .input_gpios  = key_colgpio,
-//     .noutputs     = 3,
-//     .ninputs      = 3,
-//     .settle_time  = 40,
-//     .poll_time    = 20,
-//     .flags        = GPIOKPF_DRIVE_INACTIVE,
-// };
-
-// void gpio_keypad_init(struct gpio_keypad_info *kpinfo)
-// {
-//   int output_val;
-//   int output_cfg;
-//   int i;
-
-//   output_val = (!!(kpinfo->flags & GPIOKPF_ACTIVE_HIGH)) ^
-//                (!!(kpinfo->flags & GPIOKPF_DRIVE_INACTIVE));
-//   output_cfg = kpinfo->flags & GPIOKPF_DRIVE_INACTIVE ? GPIO_OUTPUT : 0;
-
-//   for (i = 0; i < kpinfo->noutputs; i++) {
-//     gpio_set(kpinfo->output_gpios[i], output_val);
-//     gpio_config(kpinfo->output_gpios[i], output_cfg);
-//   }
-//   for (i = 0; i < kpinfo->ninputs; i++) {
-//     gpio_config(kpinfo->input_gpios[i], GPIO_INPUT);
-//   }
-// }
-
-// void buttonHandler(Core *this)
-// {
-//   gpio_keypad_init(&htcleo_keypad_info);
-
-//   int powerKeyStatus = gpio_get(HTCLEO_POWER_KP_GPIO);
-//   if (powerKeyStatus == 0) {
-//     if (this->gameState == GAME_STATE_WAITING_FOR_START) {
-//       startGame(this);
-//     }
-//     if (this->gameState != GAME_STATE_OVER && this->board->level >= 1) {
-//       gameOver(this);
-//     }
-//   }
-
-//   for (int i = 0; i < 3; i++) {
-//     gpio_set(key_rowgpio[i], 0);
-//     for (int j = 0; j < 3; j++) {
-//       int status = gpio_get(key_colgpio[j]);
-
-//       if (status == 0) {
-//         if (this->gameState == GAME_STATE_WAITING_FOR_START) {
-//           startGame(this);
-//         }
-//         HTCLEO_BUTTON_TYPE button = htcleo_keymap[KEYMAP_INDEX(i, j)];
-//         switch (button) {
-//         case KEY_SOFT1:
-//           // Windows key
-//           DEBUG((EFI_D_ERROR, "windows key pressed, GpioIn: %d, GpioOut: %d\n", key_rowgpio[i], key_colgpio[j]));
-//           break;
-//         case KEY_SEND:
-//           // Dial key
-// 			DEBUG((EFI_D_ERROR, "dial key pressed, GpioIn: %d, GpioOut: %d\n", key_rowgpio[i], key_colgpio[j]));
-//           break;
-//         case KEY_BACK:
-//           // Back key
-//           DEBUG((EFI_D_ERROR, "back key pressed, GpioIn: %d, GpioOut: %d\n", key_rowgpio[i], key_colgpio[j]));
-//           break;
-//         case KEY_HOME:
-//           // Home key
-//          DEBUG((EFI_D_ERROR, "home key pressed, GpioIn: %d, GpioOut: %d\n", key_rowgpio[i], key_colgpio[j]));
-//           break;
-//         case KEY_VOLUMEDOWN:
-//           // Volume down
-//           DEBUG((EFI_D_ERROR, "volume down key pressed, GpioIn: %d, GpioOut: %d\n", key_rowgpio[i], key_colgpio[j]));
-//           break;
-//         case KEY_VOLUMEUP:
-//           // Volume up
-// 		  DEBUG((EFI_D_ERROR, "Volume Up key pressed, GpioIn: %d, GpioOut: %d\n", key_rowgpio[i], key_colgpio[j]));
-//           if (this->gameState == GAME_STATE_RUNNING) {
-//             this->board->movePieceLeft(this->board);
-//           }
-//           break;
-//         default:
-//           // Handle any other cases
-//           break;
-//         }
-//       }
-//     }
-//     gpio_set(key_rowgpio[i], 1);
-//     mdelay(100);
-//   }
-// }
 
 void drawWindow(Core *this)
 {
@@ -196,11 +101,10 @@ void ConstructCore(Core **this)
 
   ConstructBoard(&core->board);
 
-  core->gameState     = GAME_STATE_WAITING_FOR_START;
+  core->gameState   = GAME_STATE_WAITING_FOR_START;
   core->handleInput = handleInput;
-  core->drawWindow    = drawWindow;
-  core->tickCounter   = GAME_REFRESH_PERIOD;
-
+  core->drawWindow  = drawWindow;
+  core->tickCounter = GAME_REFRESH_PERIOD;
   // set up timer event
   status = gBS->CreateEventEx(
       EVT_TIMER | EVT_NOTIFY_SIGNAL, TPL_CALLBACK, timerCallback, core, NULL,
