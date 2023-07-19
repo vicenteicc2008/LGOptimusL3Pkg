@@ -3,7 +3,7 @@
 #include "Board.h"
 
 // 1ms = 10000
-#define TIMER_PERIOD 50
+#define TIMER_PERIOD 100000
 #define GAME_REFRESH_PERIOD 35
 // the time between subsequent descents of active tetrimino (on lvl 1) equals TIMER_PERIOD * GAME_REFRESH_PERIOD
 
