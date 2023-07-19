@@ -24,7 +24,11 @@
    CONTROLS\r\n\
    Vol Up - Move left\r\n\
    Vol Down - Move right\r\n\
-   Vol Up+Down - Exit game\r\n"
+   Windows - Rotate piece\r\n\
+   Home - Drop piece\r\n\
+   Dial - Move down\r\n\
+   Back - Pause game\r\n\
+   Power on - Exit game\r\n"
 
 typedef struct _Board Board;
 
