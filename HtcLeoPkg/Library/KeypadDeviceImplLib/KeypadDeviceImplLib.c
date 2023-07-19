@@ -188,17 +188,20 @@ extern int  gpio_get(unsigned n);
 
 EFI_EVENT m_CallbackTimer         = NULL;
 EFI_EVENT m_ExitBootServicesEvent = NULL;
+BOOLEAN timerRunning = FALSE;
 
 // Callback function to disable the GPIO after a certain time
 VOID EFIAPI DisableKeyPadLed(IN EFI_EVENT Event, IN VOID *Context)
 {
   // Disable the GPIO
   gpio_set(HTCLEO_GPIO_KP_LED, 0);
+  timerRunning = FALSE;
 }
 
 // Function to enable the GPIO and schedule the callback
 VOID EnableKeypadLedWithTimer(VOID)
 {
+  timerRunning = TRUE;
   gpio_set(HTCLEO_GPIO_KP_LED, 1);
   EFI_STATUS Status;
 
@@ -209,7 +212,7 @@ VOID EnableKeypadLedWithTimer(VOID)
   ASSERT_EFI_ERROR(Status);
 
   Status = gBS->SetTimer(
-      m_CallbackTimer, TimerPeriodic, EFI_TIMER_PERIOD_MILLISECONDS(1000));
+      m_CallbackTimer, TimerPeriodic, EFI_TIMER_PERIOD_MILLISECONDS(5000));
 
   ASSERT_EFI_ERROR(Status);
 }
@@ -247,7 +250,7 @@ EFI_STATUS KeypadDeviceImplGetKeys(
     // 0000 ^0001 = 0001 = decimal 1
     IsPressed = (GpioStatus ? 1 : 0) ^ Context->ActiveLow;
 
-    if (IsPressed && !Context->IsVolumeKey) {
+    if (IsPressed && !Context->IsVolumeKey && !timerRunning) {
       EnableKeypadLedWithTimer();
     }
 
