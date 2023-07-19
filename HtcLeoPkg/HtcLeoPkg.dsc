@@ -267,6 +267,8 @@
   #
   EmbeddedPkg/Application/AndroidFastboot/AndroidFastbootApp.inf
 
+    HtcLeoPkg/Application/TetrisApp/tetris.inf
+
 
   #
   # FAT filesystem + GPT/MBR partitioning
