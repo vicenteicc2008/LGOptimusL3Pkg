@@ -198,7 +198,22 @@ GetInterruptSourceState (
   IN BOOLEAN                            *InterruptState
   )
 {
-  /* TBD */
+  UINTN Bit;
+
+  if (Source > NR_IRQS) {
+    ASSERT(FALSE);
+    return EFI_UNSUPPORTED;
+  }
+
+	Bit = 1 << (Source & 31);
+
+  if ((MmioRead32((Source > 31) ? VIC_INT_ENCLEAR1 : VIC_INT_ENCLEAR0) & Bit) == Bit) {
+    *InterruptState = FALSE;
+  }
+  else {
+    *InterruptState = TRUE;
+  }
+
   return EFI_SUCCESS;
 }
 
