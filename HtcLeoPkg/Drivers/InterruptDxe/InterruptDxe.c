@@ -220,7 +220,6 @@ EndOfInterrupt (
   IN HARDWARE_INTERRUPT_SOURCE          Source
   )
 {
-  // Clear after running the handler (Is this really clearing???)
   MmioWrite32(VIC_IRQ_VEC_WR, 0);
   ArmDataSynchronizationBarrier ();
 
@@ -250,9 +249,6 @@ IrqInterruptHandler (
   HARDWARE_INTERRUPT_HANDLER InterruptHandler;
   
   Vector = MmioRead32 (VIC_IRQ_VEC_RD);
-
-  DEBUG((EFI_D_INFO, "Vector: %p\n", Vector));//debugging
-
   MmioWrite32((Vector > 31) ? VIC_INT_CLEAR1 : VIC_INT_CLEAR0, 1 << (Vector & 31));
 
   // Needed to prevent infinite nesting when Time Driver lowers TPL
@@ -264,7 +260,7 @@ IrqInterruptHandler (
     InterruptHandler (Vector, SystemContext);
   }
 
-  // Clear after running the handler (Is this really clearing???)
+  // Clear after running the handler
   MmioWrite32(VIC_IRQ_VEC_WR, 0);
   ArmDataSynchronizationBarrier ();
 }
