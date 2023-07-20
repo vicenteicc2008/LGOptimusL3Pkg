@@ -144,6 +144,11 @@ EnableInterruptSource (
   IN HARDWARE_INTERRUPT_SOURCE          Source
   )
 {
+  if (Source > NR_IRQS) {
+    ASSERT(FALSE);
+    return EFI_UNSUPPORTED;
+  }
+  
   /* Called by unmask_interrupt() */
   unsigned reg = (Source > 31) ? VIC_INT_ENSET1 : VIC_INT_ENSET0;
 	unsigned bit = 1 << (Source & 31);
@@ -170,6 +175,11 @@ DisableInterruptSource (
   IN HARDWARE_INTERRUPT_SOURCE          Source
   )
 {
+  if (Source > NR_IRQS) {
+    ASSERT(FALSE);
+    return EFI_UNSUPPORTED;
+  }
+
   /* Called by mask_interrupt() */
   unsigned reg = (Source > 31) ? VIC_INT_ENCLEAR1 : VIC_INT_ENCLEAR0;
 	unsigned bit = 1 << (Source & 31);
@@ -235,6 +245,11 @@ EndOfInterrupt (
   IN HARDWARE_INTERRUPT_SOURCE          Source
   )
 {
+  if (Source > NR_IRQS) {
+    ASSERT(FALSE);
+    return EFI_UNSUPPORTED;
+  }
+
   MmioWrite32(VIC_IRQ_VEC_WR, 0);
   ArmDataSynchronizationBarrier ();
 
