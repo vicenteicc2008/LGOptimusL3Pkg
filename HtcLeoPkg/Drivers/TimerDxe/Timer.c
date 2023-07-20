@@ -29,6 +29,7 @@
 
 #include <Chipset/iomap.h>
 #include <Chipset/irqs.h>
+#include <Chipset/timer.h>
 
 //
 // Notifications
