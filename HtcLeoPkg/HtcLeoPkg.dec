@@ -43,8 +43,12 @@
   gHtcLeoPkgTokenSpaceGuid.PcdMipiFrameBufferVisibleWidth|480|UINT32|0x0000a404
   gHtcLeoPkgTokenSpaceGuid.PcdMipiFrameBufferVisibleHeight|800|UINT32|0x0000a405
 
+  # Memory serial
+  gHtcLeoPkgTokenSpaceGuid.PcdPstoreAddress|0x2FFC0000|UINT32|0x0000a406
+  gHtcLeoPkgTokenSpaceGuid.PcdPstoreSize|0x40000|UINT32|0x0000a407
+
   # Timer
-  gHtcLeoPkgTokenSpaceGuid.PcdTimerFreqInHz|4800000|UINT32|0x0000a406
+  gHtcLeoPkgTokenSpaceGuid.PcdTimerFreqInHz|4800000|UINT32|0x0000a408
 
   # Interrupt Controller
-  gArmTokenSpaceGuid.PcdVicBase|0xAC000000|UINT32|0x0000a407
+  gArmTokenSpaceGuid.PcdVicBase|0xAC000000|UINT32|0x0000a409
