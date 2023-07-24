@@ -69,18 +69,18 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] =
   /* Name   Address, Length,  HobOption        ResourceAttribute    ArmAttributes  ResourceType          MemoryType */
 
   /* DDR Regions */
-  {"HLOS 0",            0x00000000, 0x00100000, AddMem, SYS_MEM, SYS_MEM_CAP,   Conv,   WRITE_BACK}, /* Probably shouldn't be hlos, check needed */
+  {"APPSBL",            0x00000000, 0x00100000, AddMem, MEM_RES, UNCACHEABLE,   Reserv,   UNCACHED_UNBUFFERED}, /* Probably shouldn't be hlos, check needed */
   {"SMEM",              0x00100000, 0x00100000, AddMem, MEM_RES, UNCACHEABLE,   Reserv, UNCACHED_UNBUFFERED},
   {"Reserved 1",        0x00200000, 0x02800000, AddMem, SYS_MEM, SYS_MEM_CAP,   Reserv, NS_DEVICE},
   {"Display Reserved",  0x02A00000, 0x000C0000, AddMem, MEM_RES, WRITE_THROUGH, MaxMem, WRITE_THROUGH},
   {"Reserved 2",        0x02AC0000, 0x0ED40000, AddMem, SYS_MEM, SYS_MEM_CAP,   Reserv, NS_DEVICE},
-  {"HLOS 1",            0x11800000, 0x1A800000, AddMem, SYS_MEM, SYS_MEM_CAP,   Conv,   WRITE_BACK},
+  {"HLOS 0",            0x11800000, 0x1A800000, AddMem, SYS_MEM, SYS_MEM_CAP,   Conv,   WRITE_BACK},
   {"UEFI FD",           0x2C000000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP,   BsCode, WRITE_BACK},
 #if USE_MEMORY_FOR_SERIAL_OUTPUT == 1
-  {"HLOS 2",            0x2C200000, 0x03DC0000, AddMem, SYS_MEM, SYS_MEM_CAP,   Conv,   WRITE_BACK},
+  {"HLOS 1",            0x2C200000, 0x03DC0000, AddMem, SYS_MEM, SYS_MEM_CAP,   Conv,   WRITE_BACK},
   {"PStore",            0x2FFC0000, 0x00040000, AddMem, MEM_RES, SYS_MEM_CAP,   Reserv, WRITE_THROUGH_XN},
 #else
-  {"HLOS 2",            0x2C200000, 0x03E00000, AddMem, SYS_MEM, SYS_MEM_CAP,   Conv,   WRITE_BACK},
+  {"HLOS 1",            0x2C200000, 0x03E00000, AddMem, SYS_MEM, SYS_MEM_CAP,   Conv,   WRITE_BACK},
 #endif
 
   /* Peripheral regions */
