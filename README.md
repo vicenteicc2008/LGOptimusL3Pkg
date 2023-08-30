@@ -1,3 +1,6 @@
+# Deprecated
+See https://github.com/HTC-Leo-Revival-Project/HtcHd2Pkg
+
 # EDK2 UEFI Firmware For HTC HD2
 Attempt to create a normal EDK2 for HTC HD2.
 
