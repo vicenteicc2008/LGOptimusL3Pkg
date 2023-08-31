@@ -1,5 +1,4 @@
 # EDK2 UEFI Firmware For HTC HD2
-Based on Hikey960Pkg
 
 ## Status 
 
