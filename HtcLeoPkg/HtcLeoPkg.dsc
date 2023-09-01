@@ -231,7 +231,7 @@
   # SoC Drivers
   HtcLeoPkg/Drivers/ClockDxe/ClockDxe.inf
   HtcLeoPkg/Drivers/GpioDxe/GpioDxe.inf
-  HtcLeoPkg/GPLDrivers/SdccDxe/SdccDxe.inf
+  HtcLeoPkg/GPLDrivers/SdCardDxe/SdCardDxe.inf
   HtcLeoPkg/Drivers/GenericKeypadDeviceDxe/GenericKeypadDeviceDxe.inf
   HtcLeoPkg/Drivers/KeypadDxe/KeypadDxe.inf
 
