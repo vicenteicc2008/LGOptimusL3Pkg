@@ -179,21 +179,21 @@ MMCHSReadBlocks(
 	if (BufferSize % BlockSize != 0) 
     {
 		DEBUG((EFI_D_ERROR, "MMCHSReadBlocks: BAD buffer!!!\n"));
-    	mdelay(5000);
+    	MicroSecondDelay(5000);
         return EFI_BAD_BUFFER_SIZE;
     }
 
 	if (Buffer == NULL) 
     {
 		DEBUG((EFI_D_ERROR, "MMCHSReadBlocks: Invalid parameter!!!\n"));
-    	mdelay(5000);
+    	MicroSecondDelay(5000);
         return EFI_INVALID_PARAMETER;
     }
 
 	if (BufferSize == 0) 
     {
 		DEBUG((EFI_D_ERROR, "MMCHSReadBlocks: BufferSize = 0\n"));
-    	mdelay(5000);
+    	MicroSecondDelay(5000);
         return EFI_SUCCESS;
     }
 
@@ -206,7 +206,7 @@ MMCHSReadBlocks(
     else
     {
         DEBUG((EFI_D_ERROR, "MMCHSReadBlocks: Read error!\n"));
-        mdelay(5000);
+        MicroSecondDelay(5000);
         return EFI_DEVICE_ERROR;
     }
     

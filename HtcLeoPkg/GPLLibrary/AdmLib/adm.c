@@ -59,10 +59,10 @@
 
 #include <Library/IoLib.h>
 #include <Library/LKEnvLib.h>
+#include <Library/TimerLib.h>
 #include <Library/reg.h>
 #include <Library/adm.h>
 
-extern void mdelay(unsigned msecs);
 extern void dmb();
 
 int adm_start_transfer(UINT32 adm_chn, UINT32 *cmd_ptr_list)
@@ -91,7 +91,7 @@ int adm_start_transfer(UINT32 adm_chn, UINT32 *cmd_ptr_list)
 			break;
 		}
 		/* 10ms wait */
-		mdelay(10);
+		MicroSecondDelay(10);
     }while(delay_count--);
 	
 	/* Read out the IRQ register to clear the interrupt.

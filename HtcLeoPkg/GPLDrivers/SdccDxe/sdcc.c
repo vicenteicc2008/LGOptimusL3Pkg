@@ -188,7 +188,7 @@ int mmc_legacy_init()
 
 #ifdef USE_HIGH_SPEED_MODE	// Put card in high-speed mode and increase the SD MCLK if supported.
     if (switch_mode(rca) == 1) {
-       udelay(1000);
+       NanoSecondDelay(1000);
        // Increase MCLK to 48MHz
        SD_MCLK_set(MCLK_48MHz);
        /* Card is in high speed mode, use feedback clock. */
@@ -196,7 +196,7 @@ int mmc_legacy_init()
        temp32 &= ~(MCI_CLK__SELECT_IN___M);
        temp32 |= (MCI_CLK__SELECT_IN__USING_FEEDBACK_CLOCK << MCI_CLK__SELECT_IN___S);
        writel(temp32, sdcn.base + MCI_CLK);
-       udelay(1000);
+       NanoSecondDelay(1000);
     }
 #endif
     if (!card_set_block_size(BLOCK_SIZE)) {
@@ -697,7 +697,7 @@ int card_identification_selection(uint32_t cid[], uint16_t* rca, uint8_t* num_of
 		hc_support = (1 << 30);  // HCS bit for ACMD41
 		DEBUG((EFI_D_ERROR, "HC\n"));
 	}
-	udelay(1000);
+	NanoSecondDelay(1000);
 	
 	// CMD55
 	// Send before any application specific command
@@ -720,7 +720,7 @@ int card_identification_selection(uint32_t cid[], uint16_t* rca, uint8_t* num_of
 	while (!(response[0] & 0x80000000))	{
 		// A short delay here after the ACMD41 will prevent the next
 		// command from failing with a CRC error when I-cache is enabled.
-		udelay(1000);
+		NanoSecondDelay(1000);
 
 		cmd = CMD55 | MCI_CMD__ENABLE___M | MCI_CMD__RESPONSE___M;
 		if (!mmc_send_cmd(cmd, 0x00000000, response))
@@ -737,7 +737,7 @@ int card_identification_selection(uint32_t cid[], uint16_t* rca, uint8_t* num_of
 
 	// A short delay here after the ACMD41 will prevent the next
 	// command from failing with a CRC error when I-cache is enabled.
-	udelay(1000);
+	NanoSecondDelay(1000);
 
 	// CMD2
 	// Reads CID register contents - long response R2
@@ -1186,7 +1186,7 @@ static int SDCn_init(uint32_t instance)
 			sdcn.base + MCI_CLK);
 
 	// Delay
-	udelay(1000);
+	NanoSecondDelay(1000);
 
 	return(1);
 }
