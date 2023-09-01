@@ -47,7 +47,6 @@
   DebugLib
   UefiBootServicesTableLib
 
-  MsmTargetClockLib
   MsmTargetGpioLib
   MsmPcomLib
   MsmPcomClientLib
