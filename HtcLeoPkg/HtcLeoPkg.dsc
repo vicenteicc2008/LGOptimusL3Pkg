@@ -229,7 +229,7 @@
   MdeModulePkg/Universal/StatusCodeHandler/RuntimeDxe/StatusCodeHandlerRuntimeDxe.inf
 
   # SoC Drivers
-  HtcLeoPkg/Drivers/ClockDxe/ClockDxe.inf
+  HtcLeoPkg/GPLDrivers/ClockDxe/ClockDxe.inf
   HtcLeoPkg/Drivers/GpioDxe/GpioDxe.inf
   HtcLeoPkg/GPLDrivers/SdCardDxe/SdCardDxe.inf
   HtcLeoPkg/Drivers/GenericKeypadDeviceDxe/GenericKeypadDeviceDxe.inf

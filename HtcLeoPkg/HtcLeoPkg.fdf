@@ -122,7 +122,7 @@ APRIORI DXE {
   # INF HtcLeoPkg/Drivers/HeartbeatDxe/HeartbeatDxe.inf
 
   # SoC Drivers
-  INF HtcLeoPkg/Drivers/ClockDxe/ClockDxe.inf
+  INF HtcLeoPkg/GPLDrivers/ClockDxe/ClockDxe.inf
   INF HtcLeoPkg/Drivers/GpioDxe/GpioDxe.inf
   INF HtcLeoPkg/GPLDrivers/SdCardDxe/SdCardDxe.inf
   INF HtcLeoPkg/Drivers/GenericKeypadDeviceDxe/GenericKeypadDeviceDxe.inf
